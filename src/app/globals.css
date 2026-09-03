@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 10% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 345 58% 33%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 345 58% 33%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 5%;
+    --foreground: 240 5% 96%;
+    --card: 240 10% 7%;
+    --card-foreground: 240 5% 96%;
+    --popover: 240 10% 7%;
+    --popover-foreground: 240 5% 96%;
+    --primary: 345 76% 65%;
+    --primary-foreground: 240 10% 5%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 18%;
+    --input: 240 4% 18%;
+    --ring: 345 76% 65%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #FAFAF9;
+    color: #18181B;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    background-color: #0C0C0E;
+    color: #F4F4F5;
+  }
+
+  ::selection {
+    background-color: #832841;
+    color: #FAFAF9;
+  }
+
+  .dark ::selection {
+    background-color: #ED7A94;
+    color: #0C0C0E;
+  }
+}
+
+/* ================= APPLE iOS 18 / VisionOS LIQUID GLASS SYSTEM ================= */
+.apple-liquid-glass-shell {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 244, 252, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 12px 36px -4px rgba(0, 0, 0, 0.08),
+    0 4px 16px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1.5px 1px 0 rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+}
+
+.dark .apple-liquid-glass-shell {
+  background: linear-gradient(180deg, rgba(30, 30, 36, 0.75) 0%, rgba(18, 18, 22, 0.65) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 16px 42px -6px rgba(0, 0, 0, 0.75),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+}
+
+.apple-liquid-glass-active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(235, 240, 250, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 3px 10px 0 rgba(0, 0, 0, 0.08),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .apple-liquid-glass-active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 4px 14px 0 rgba(0, 0, 0, 0.45),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Glass Orb for Circular Controls */
+.apple-glass-orb {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(240, 240, 245, 0.25) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.dark .apple-glass-orb {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* ================= SECTION DIVIDER LINE ANIMATION ================= */
+@keyframes line-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.animate-line-draw {
+  animation: line-draw 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.0) forwards;
+  transform-origin: left center;
+}
+
+/* ================= SCROLL REEL TESTIMONIALS ANIMATION ================= */
+@keyframes scroll-reel-char-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-reel-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+.scroll-reel-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: scroll-reel-char-rise 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.scroll-reel-exit {
+  animation: scroll-reel-exit 0.24s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Hide scrollbars for clean UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

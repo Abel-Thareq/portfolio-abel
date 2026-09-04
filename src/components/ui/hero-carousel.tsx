@@ -286,7 +286,7 @@ export function HeroCarousel({
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       className={cn(
-        "relative h-full min-h-[34rem] sm:min-h-[38rem] lg:min-h-[42rem] w-full overflow-hidden bg-[#0A0A0C] text-white select-none rounded-3xl border border-zinc-800/80 shadow-2xl transform-gpu will-change-transform",
+        "relative h-auto md:h-full min-h-0 md:min-h-[38rem] lg:min-h-[42rem] w-full overflow-hidden bg-[#0A0A0C] text-white select-none rounded-2xl sm:rounded-3xl border border-zinc-800/80 shadow-2xl transform-gpu will-change-transform",
         "outline-none focus-visible:ring-1 focus-visible:ring-white/40 focus-visible:ring-inset",
         className
       )}
@@ -326,38 +326,152 @@ export function HeroCarousel({
         style={{ backgroundImage: GRAIN, backgroundSize: "180px 180px" }}
       />
 
-      {/* ── Top bar: branding and controls ── */}
-      <div
-        className="absolute inset-x-0 z-20 flex items-center justify-between px-6 sm:px-10"
-        style={{ top: Math.max(20, box.h * 0.04) }}
-      >
-        <div className="flex items-center gap-2 font-mono uppercase tracking-[0.16em] text-xs text-zinc-400">
-          <Award className="w-4 h-4 text-maroon-400" />
-          <span>{brand ?? "VERIFIED CREDENTIALS"}</span>
+      {/* ================= MOBILE VIEW (< 768px): Structured Flex Flow with 0% Overlap ================= */}
+      <div className="flex md:hidden flex-col p-5 space-y-4 relative z-20 w-full">
+        {/* Mobile Top Bar */}
+        <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2 font-mono uppercase tracking-wider text-[11px] text-zinc-400">
+            <Award className="w-3.5 h-3.5 text-maroon-400 flex-shrink-0" />
+            <span className="truncate max-w-[170px]">{brand ?? "CREDENTIALS"}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="font-mono text-xs text-zinc-400 tabular-nums flex items-center gap-1 mr-1">
+              <span className="text-white font-semibold">{String(index + 1).padStart(2, "0")}</span>
+              <span className="text-zinc-600">/</span>
+              <span>{String(items.length).padStart(2, "0")}</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => go(index - 1)}
+              disabled={index === 0}
+              aria-label="Previous certificate"
+              className="w-7 h-7 rounded-full border border-white/20 bg-black/50 flex items-center justify-center text-white/80 disabled:opacity-20 active:scale-95 transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(index + 1)}
+              disabled={index === last}
+              aria-label="Next certificate"
+              className="w-7 h-7 rounded-full border border-white/20 bg-black/50 flex items-center justify-center text-white/80 disabled:opacity-20 active:scale-95 transition-all cursor-pointer"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        {/* Previous / Next interactive button controls */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => go(index - 1)}
-            disabled={index === 0}
-            aria-label="Previous certificate"
-            className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-          >
-            <ChevronLeft className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
-          </button>
-          <button
-            type="button"
-            onClick={() => go(index + 1)}
-            disabled={index === last}
-            aria-label="Next certificate"
-            className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-          >
-            <ChevronRight className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
-          </button>
+        {/* Mobile Active Certificate Card with Swipe Support */}
+        <div className="relative w-full aspect-[1.38] rounded-xl overflow-hidden border border-white/20 shadow-xl bg-black/40">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img
+              key={index}
+              src={active.image}
+              alt={active.title}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -35 && index < last) go(index + 1);
+                if (info.offset.x > 35 && index > 0) go(index - 1);
+              }}
+              className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
+            />
+          </AnimatePresence>
+        </div>
+
+        {/* Mobile Progress Rail */}
+        <div className="relative h-1 w-full rounded-full bg-white/10 overflow-hidden">
+          <motion.div
+            className="absolute inset-y-0 bg-gradient-to-r from-maroon-400 to-white rounded-full"
+            style={{ width: `${100 / items.length}%` }}
+            animate={{ left: `${(index / items.length) * 100}%` }}
+            transition={{ type: "spring", stiffness: 280, damping: 30 }}
+          />
+        </div>
+
+        {/* Mobile Details: Credit, Title, Meta, PDF Download */}
+        <div className="space-y-2.5 pt-1">
+          {active.credit && (
+            <p className="font-mono text-[11px] uppercase tracking-wider text-maroon-300 font-semibold leading-tight">
+              {active.credit}
+            </p>
+          )}
+
+          <h3 className="text-base sm:text-lg font-medium text-white leading-snug">
+            {active.title}
+          </h3>
+
+          {/* Meta Badges */}
+          {active.meta?.length ? (
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {active.meta.map((fact) => (
+                <span
+                  key={fact}
+                  className="font-mono text-[10px] uppercase tracking-wider text-zinc-300 bg-white/5 border border-white/10 px-2.5 py-1 rounded-md"
+                >
+                  {fact}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
+          {/* Mobile Download Action */}
+          <div className="pt-2">
+            <a
+              href={active.pdfUrl || active.image}
+              download={`${active.title}.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-mono font-medium tracking-wider uppercase bg-white text-zinc-950 hover:bg-zinc-200 active:scale-95 shadow-md border border-white/40 cursor-pointer"
+            >
+              <FileDown className="w-3.5 h-3.5 text-maroon-700 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
+              <RollingText>Download as PDF</RollingText>
+            </a>
+          </div>
         </div>
       </div>
+
+      {/* ================= DESKTOP VIEW (>= 768px): Cinematic Editorial Filmstrip ================= */}
+      <div className="hidden md:block">
+        {/* ── Top bar: branding and controls ── */}
+        <div
+          className="absolute inset-x-0 z-20 flex items-center justify-between px-6 sm:px-10"
+          style={{ top: Math.max(20, box.h * 0.04) }}
+        >
+          <div className="flex items-center gap-2 font-mono uppercase tracking-[0.16em] text-xs text-zinc-400">
+            <Award className="w-4 h-4 text-maroon-400" />
+            <span>{brand ?? "VERIFIED CREDENTIALS"}</span>
+          </div>
+
+          {/* Previous / Next interactive button controls */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => go(index - 1)}
+              disabled={index === 0}
+              aria-label="Previous certificate"
+              className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(index + 1)}
+              disabled={index === last}
+              aria-label="Next certificate"
+              className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
+            </button>
+          </div>
+        </div>
 
       {/* ── Headline & Details Block ── */}
       <div
@@ -515,6 +629,7 @@ export function HeroCarousel({
             transition={spring}
           />
         </div>
+      </div>
       </div>
     </div>
   );

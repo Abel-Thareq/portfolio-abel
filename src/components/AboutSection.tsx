@@ -32,7 +32,7 @@ export const AboutSection: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-          className="flex items-center justify-between mb-12"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-10 sm:mb-12"
         >
           <motion.div variants={slideUp}>
             <h2 className="text-2xl sm:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -53,7 +53,7 @@ export const AboutSection: React.FC = () => {
           </motion.div>
           <motion.span
             variants={slideUp}
-            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50"
+            className="self-start sm:self-auto text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full border border-zinc-200/50 dark:border-zinc-700/50 whitespace-nowrap flex-shrink-0"
           >
             Profile
           </motion.span>

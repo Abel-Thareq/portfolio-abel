@@ -36,7 +36,7 @@ export const Education: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-          className="flex items-center justify-between mb-14"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-10 sm:mb-14"
         >
           <motion.div variants={slideUp}>
             <h2 className="text-2xl sm:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -57,7 +57,7 @@ export const Education: React.FC = () => {
           </motion.div>
           <motion.span
             variants={slideUp}
-            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50 flex items-center gap-1.5"
+            className="self-start sm:self-auto text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full border border-zinc-200/50 dark:border-zinc-700/50 flex items-center gap-1.5 whitespace-nowrap flex-shrink-0"
           >
             <NumberTicker value={3} padZero />
             <span>Academic Milestones</span>
@@ -125,22 +125,22 @@ export const Education: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                    <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto pt-1 sm:pt-0">
                       {edu.grade && (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-mono text-maroon-800 dark:text-maroon-300 bg-maroon-50 dark:bg-maroon-950/40 border border-maroon-200/60 dark:border-maroon-800/60 px-2.5 py-1 rounded-full">
-                          <Award className="w-3 h-3" />
+                        <span className="inline-flex items-center gap-1.5 text-xs font-mono text-maroon-800 dark:text-maroon-300 bg-maroon-50 dark:bg-maroon-950/40 border border-maroon-200/60 dark:border-maroon-800/60 px-3 py-1 rounded-full whitespace-nowrap flex-shrink-0">
+                          <Award className="w-3 h-3 flex-shrink-0" />
                           <span>Grade:</span>
                           {edu.grade.includes("3.55") ? (
-                            <span className="inline-flex items-center">
+                            <span className="inline-flex items-center whitespace-nowrap font-medium">
                               <NumberTicker value={3.55} decimalPlaces={2} />
-                              <span>&nbsp;/ 4.00</span>
+                              <span>/4.00</span>
                             </span>
                           ) : (
-                            <span>{edu.grade}</span>
+                            <span className="whitespace-nowrap">{edu.grade}</span>
                           )}
                         </span>
                       )}
-                      <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60">
+                      <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 whitespace-nowrap flex-shrink-0">
                         {edu.period}
                       </span>
                     </div>

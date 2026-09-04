@@ -5,6 +5,8 @@ import { motion, type Variants } from "framer-motion";
 import { ArrowDown, Mail, ArrowUpRight, MapPin } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
 import { LanyardWrapper } from "./LanyardWrapper";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 // Dynamic rotating roles requested by user
 const dynamicRoles = [
@@ -103,7 +105,7 @@ export const Hero: React.FC = () => {
             <motion.div variants={fadeSlideRight} className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 text-xs font-normal text-zinc-600 dark:text-zinc-300 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 px-3.5 py-1.5 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-maroon-500 animate-pulse" />
-                Available for software engineering roles
+                <ScrambleText text="Available for software engineering roles" speed={28} />
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
                 <MapPin className="w-3.5 h-3.5 text-zinc-400" />
@@ -113,7 +115,7 @@ export const Hero: React.FC = () => {
 
             {/* Main Editorial Headline with Snappy Typewriter Morphing Text */}
             <motion.div variants={fadeSlideUp}>
-              <h1 className="text-4xl sm:text-5xl md:text-[54px] font-normal tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.14]">
+              <h1 className="text-3xl sm:text-5xl md:text-[54px] font-normal tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.14]">
                 Hi, I&apos;m{" "}
                 <span className="font-serif italic font-normal text-zinc-950 dark:text-white">
                   {personalInfo.name}
@@ -129,7 +131,7 @@ export const Hero: React.FC = () => {
             {/* Core Grounded Statement */}
             <motion.p
               variants={fadeSlideUp}
-              className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-light max-w-xl leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 font-light max-w-xl leading-relaxed"
             >
               {personalInfo.heroStatement}
             </motion.p>
@@ -155,7 +157,7 @@ export const Hero: React.FC = () => {
             {/* Action CTAs */}
             <motion.div
               variants={fadeSlideUp}
-              className="pt-3 flex flex-wrap items-center gap-4 relative z-20"
+              className="pt-2 flex flex-wrap items-center gap-3.5 relative z-20"
             >
               <motion.a
                 href="#work"
@@ -186,6 +188,48 @@ export const Hero: React.FC = () => {
                 <span>Framer Mirror</span>
                 <ArrowUpRight className="w-3 h-3 text-zinc-400" />
               </a>
+            </motion.div>
+
+            {/* Quick Metrics Strip with Rolling Number Counters */}
+            <motion.div
+              variants={fadeSlideUp}
+              className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl"
+            >
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
+                  <NumberTicker value={4} padZero suffix="+" delay={0.2} />
+                </div>
+                <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Key Projects
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
+                  <NumberTicker value={20} delay={0.3} />
+                </div>
+                <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Certif & IP
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
+                  <NumberTicker value={3.92} decimalPlaces={2} delay={0.4} />
+                </div>
+                <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Scholastic GPA
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
+                  <NumberTicker value={100} suffix="%" delay={0.5} />
+                </div>
+                <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Delivery Rate
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 

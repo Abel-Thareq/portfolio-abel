@@ -42,6 +42,8 @@ export function LanyardComponent({
     };
   }, []);
 
+  if (isMobile) return null;
+
   return (
     <div
       ref={containerRef}

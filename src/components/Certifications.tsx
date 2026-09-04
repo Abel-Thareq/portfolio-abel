@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Award } from "lucide-react";
 import { HeroCarousel, type HeroCarouselItem } from "@/components/ui/hero-carousel";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 const CERTIFICATES_DATA: HeroCarouselItem[] = [
   {
@@ -203,18 +205,23 @@ export const Certifications: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-4 h-4 text-maroon-700 dark:text-maroon-400" />
-              <span className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
-                Official Validation & Training
-              </span>
+              <ScrambleText
+                text="OFFICIAL VALIDATION & TRAINING"
+                speed={25}
+                className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400"
+              />
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-zinc-900 dark:text-zinc-100">
               Intellectual Property & <span className="font-serif italic text-maroon-800 dark:text-maroon-300">Credentials</span>
             </h2>
           </div>
 
-          <div className="mt-4 sm:mt-0 flex items-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+          <div className="mt-4 sm:mt-0 flex items-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/90 px-3 py-1.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60">
             <Award className="w-3.5 h-3.5 text-maroon-600 dark:text-maroon-400" />
-            <span>20 Verified Certificates & Copyright</span>
+            <span className="flex items-center gap-1">
+              <NumberTicker value={20} />
+              <span>Verified Credentials & IP</span>
+            </span>
           </div>
         </motion.div>
 

@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { MessageSquareQuote, Sparkles } from "lucide-react";
 import { ScrollReelTestimonials, ScrollReelTestimonial } from "@/components/ui/scroll-reel-testimonials";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 const TESTIMONIALS_DATA: ScrollReelTestimonial[] = [
   {
@@ -58,18 +60,23 @@ export const TestimonialsSection: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <MessageSquareQuote className="w-4 h-4 text-maroon-700 dark:text-maroon-400" />
-              <span className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
-                Endorsements & Feedback
-              </span>
+              <ScrambleText
+                text="ENDORSEMENTS & PEER FEEDBACK"
+                speed={25}
+                className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400"
+              />
             </div>
             <h2 className="text-3xl sm:text-4xl font-normal tracking-tight text-zinc-900 dark:text-zinc-100">
               Words from <span className="font-serif italic text-maroon-800 dark:text-maroon-300">Leaders & Peers</span>
             </h2>
           </div>
 
-          <div className="mt-4 sm:mt-0 flex items-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+          <div className="mt-4 sm:mt-0 flex items-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/90 px-3 py-1.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60">
             <Sparkles className="w-3.5 h-3.5 text-maroon-600 dark:text-maroon-400 animate-pulse" />
-            <span>05 Verified Testimonials</span>
+            <span className="flex items-center gap-1">
+              <NumberTicker value={5} padZero />
+              <span>Verified Testimonials</span>
+            </span>
           </div>
         </motion.div>
 

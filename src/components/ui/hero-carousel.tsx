@@ -483,13 +483,28 @@ export function HeroCarousel({
       {/* ── Position Rail & Navigation Indicator ── */}
       <div
         className="absolute z-20"
-        style={{ left: pad, bottom: Math.max(16, box.h * 0.035), width: box.w * RAIL }}
+        style={{ left: pad, bottom: Math.max(16, box.h * 0.035), width: Math.max(160, box.w * RAIL) }}
       >
-        <div
-          className="flex justify-between font-mono tabular-nums text-xs text-zinc-400"
-        >
-          <span className="text-white font-semibold">{String(index + 1).padStart(2, "0")}</span>
-          <span>{String(items.length).padStart(2, "0")} CREDENTIALS</span>
+        <div className="flex justify-between font-mono tabular-nums text-xs text-zinc-400">
+          <div className="flex items-center gap-1">
+            <span className="inline-block overflow-hidden h-[18px] relative w-[20px]">
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span
+                  key={index}
+                  initial={{ y: 14, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -14, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="text-white font-semibold absolute inset-0 flex items-center"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+            <span className="text-zinc-500">/</span>
+            <span>{String(items.length).padStart(2, "0")}</span>
+          </div>
+          <span className="uppercase tracking-widest text-[10px] sm:text-[11px] text-zinc-400">CREDENTIALS</span>
         </div>
         <div className="relative mt-2 h-1 w-full rounded-full bg-white/15 overflow-hidden">
           <motion.div

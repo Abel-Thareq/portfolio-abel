@@ -11,6 +11,7 @@ import { Certifications } from "@/components/Certifications";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { AboutSection } from "@/components/AboutSection";
 import { Footer } from "@/components/Footer";
+import { MarqueeTicker } from "@/components/ui/marquee-ticker";
 
 export default function Home() {
   return (
@@ -25,6 +26,20 @@ export default function Home() {
 
       <main>
         <Hero />
+        <MarqueeTicker
+          items={[
+            "SOFTWARE ARCHITECTURE",
+            "FRONTEND SYSTEMS",
+            "DISTRIBUTED DATA WORKFLOWS",
+            "WIRELESS SENSOR NETWORKS",
+            "INTELLECTUAL PROPERTY REGISTERED",
+            "NEXT.JS & TYPESCRIPT",
+            "HIGH PERFORMANCE COMPUTING",
+            "CLEAN CODE & DESIGN PATTERNS",
+          ]}
+          speed={32}
+          direction="left"
+        />
         <SelectedWork />
         <Experience />
         <CoreCapabilities />

@@ -269,7 +269,7 @@ export const Navigation: React.FC = () => {
 
                   {/* Horizontal Section List with Isolated LayoutGroup so Pill CANNOT project from Theme */}
                   <LayoutGroup id="dynamic-island-nav-group">
-                    <nav className="flex items-center gap-1 py-0.5">
+                    <nav className="flex items-center gap-1 py-0.5 overflow-x-auto no-scrollbar max-w-[calc(100vw-120px)] sm:max-w-none">
                       {navItems.map((item) => {
                         const isChosen = activeSection === item.id;
                         return (

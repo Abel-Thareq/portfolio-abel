@@ -6,6 +6,8 @@ import { motion, useScroll, type Variants } from "framer-motion";
 import { GraduationCap, CheckCircle2, Award } from "lucide-react";
 import { educations } from "@/data/portfolioData";
 import { SpotlightCard } from "./SpotlightCard";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 const slideUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -40,9 +42,11 @@ export const Education: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100 tracking-tight">
               Academic Background
             </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1">
-              FORMAL EDUCATION & SCHOLASTIC ACHIEVEMENTS
-            </p>
+            <ScrambleText
+              text="FORMAL EDUCATION & SCHOLASTIC ACHIEVEMENTS"
+              speed={25}
+              className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1"
+            />
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
@@ -53,9 +57,10 @@ export const Education: React.FC = () => {
           </motion.div>
           <motion.span
             variants={slideUp}
-            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50"
+            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50 flex items-center gap-1.5"
           >
-            3 Institutions
+            <NumberTicker value={3} padZero />
+            <span>Academic Milestones</span>
           </motion.span>
         </motion.div>
 
@@ -122,9 +127,17 @@ export const Education: React.FC = () => {
 
                     <div className="flex items-center gap-2 self-start sm:self-auto">
                       {edu.grade && (
-                        <span className="inline-flex items-center gap-1 text-xs font-mono text-maroon-800 dark:text-maroon-300 bg-maroon-50 dark:bg-maroon-950/40 border border-maroon-200/60 dark:border-maroon-800/60 px-2.5 py-1 rounded-full">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-mono text-maroon-800 dark:text-maroon-300 bg-maroon-50 dark:bg-maroon-950/40 border border-maroon-200/60 dark:border-maroon-800/60 px-2.5 py-1 rounded-full">
                           <Award className="w-3 h-3" />
-                          Grade: {edu.grade}
+                          <span>Grade:</span>
+                          {edu.grade.includes("3.92") ? (
+                            <span className="inline-flex items-center">
+                              <NumberTicker value={3.92} decimalPlaces={2} />
+                              <span>&nbsp;/ 4.00</span>
+                            </span>
+                          ) : (
+                            <span>{edu.grade}</span>
+                          )}
                         </span>
                       )}
                       <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60">

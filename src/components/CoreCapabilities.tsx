@@ -5,6 +5,8 @@ import { motion, type Variants } from "framer-motion";
 import { Layout, GitBranch, Database, Check } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
 import { SpotlightCard } from "./SpotlightCard";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 const slideUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -37,9 +39,11 @@ export const CoreCapabilities: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100 tracking-tight">
               Technical Capabilities
             </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1">
-              CORE PILLARS & ARCHITECTURAL FOCUS
-            </p>
+            <ScrambleText
+              text="CORE PILLARS & ARCHITECTURAL FOCUS"
+              speed={25}
+              className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1"
+            />
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
@@ -50,9 +54,10 @@ export const CoreCapabilities: React.FC = () => {
           </motion.div>
           <motion.span
             variants={slideUp}
-            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50"
+            className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-full border border-zinc-200/50 dark:border-zinc-700/50 flex items-center gap-1.5"
           >
-            03 Pillars
+            <NumberTicker value={3} padZero />
+            <span>Core Pillars</span>
           </motion.span>
         </motion.div>
 

@@ -4,6 +4,7 @@ import React from "react";
 import { motion, type Variants } from "framer-motion";
 import { Sparkles, MapPin } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
+import { ScrambleText } from "./ui/scramble-text";
 
 const slideUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -37,9 +38,11 @@ export const AboutSection: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100 tracking-tight">
               About & Philosophy
             </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1">
-              ENGINEERING FOUNDATION & STORY
-            </p>
+            <ScrambleText
+              text="ENGINEERING FOUNDATION & STORY"
+              speed={25}
+              className="text-xs text-zinc-500 dark:text-zinc-400 font-mono mt-1"
+            />
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}

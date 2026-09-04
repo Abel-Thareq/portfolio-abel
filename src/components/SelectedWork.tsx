@@ -6,6 +6,8 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Plus, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { projects, Project, personalInfo } from "@/data/portfolioData";
 import { ProjectModal } from "./ProjectModal";
+import { NumberTicker } from "./ui/number-ticker";
+import { ScrambleText } from "./ui/scramble-text";
 
 export const SelectedWork: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -86,8 +88,9 @@ export const SelectedWork: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="mt-4 sm:mt-0 flex items-center gap-2"
           >
-            <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/90 px-3 py-1.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60">
-              04 Production Projects
+            <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/90 px-3 py-1.5 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 flex items-center gap-1.5">
+              <NumberTicker value={4} padZero />
+              <span>Production Projects</span>
             </span>
           </motion.div>
         </motion.div>
@@ -182,14 +185,14 @@ export const SelectedWork: React.FC = () => {
 
         {/* ================= MOBILE & SMALL TABLET VIEW (< lg) ================= */}
         <div className="block lg:hidden space-y-8">
-          <div className="relative w-full max-w-[320px] h-[360px] mx-auto mb-6 [mask-image:linear-gradient(to_bottom,black_65%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_65%,transparent_98%)]">
+          <div className="relative w-full max-w-[260px] sm:max-w-[320px] h-[280px] sm:h-[360px] mx-auto mb-6 [mask-image:linear-gradient(to_bottom,black_65%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_65%,transparent_98%)]">
             <Image
               src="/assets/abel-cutout.webp"
               alt="Abel Thareq"
               fill
               priority
               className="object-contain drop-shadow-xl"
-              sizes="320px"
+              sizes="(max-width: 640px) 260px, 320px"
             />
           </div>
 
@@ -237,9 +240,11 @@ function ProjectCardComponent({
         {/* Top Header */}
         <div className="flex items-center justify-between pb-3.5 border-b border-zinc-100 dark:border-zinc-800/80">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-medium text-zinc-400 dark:text-zinc-500">
-              {project.number}
-            </span>
+            <ScrambleText
+              text={project.number}
+              speed={35}
+              className="text-xs font-mono font-medium text-zinc-400 dark:text-zinc-500"
+            />
             <span className="text-zinc-300 dark:text-zinc-700">/</span>
             <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 truncate max-w-[180px]">
               {project.role}

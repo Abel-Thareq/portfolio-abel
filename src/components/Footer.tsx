@@ -125,12 +125,12 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href={personalInfo.socials.website}
+                href={personalInfo.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors cursor-pointer"
               >
-                <RollingText>Framer Portfolio</RollingText>
+                <RollingText>Instagram</RollingText>
                 <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
 

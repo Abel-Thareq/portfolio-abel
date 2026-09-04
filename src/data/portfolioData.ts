@@ -56,11 +56,11 @@ export const personalInfo = {
   roleHeadline: "Software Engineer",
   location: "Magelang, Central Java, Indonesia",
   timezone: "GMT+7",
-  email: "abelthareq@gmail.com",
+  email: "abel.thareq88@gmail.com",
   socials: {
     linkedin: "https://linkedin.com/in/abelthareq",
-    website: "https://4bel.framer.website",
-    github: "https://github.com/abelthareq",
+    instagram: "https://www.instagram.com/abeliebelollipop__",
+    github: "https://github.com/Abel-Thareq",
   },
   heroStatement: "Building practical digital products and information systems with structured thinking, data, and software.",
   aboutStory: [

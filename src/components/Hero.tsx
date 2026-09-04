@@ -88,19 +88,29 @@ export const Hero: React.FC = () => {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, roleIndex, isMounted]);
 
+  // Smooth scroll helper for action buttons with navbar offset
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="relative min-h-[600px] lg:min-h-[660px] pt-28 pb-16 md:pt-32 md:pb-20 overflow-visible">
       {/* Full-Screen 3D Interactive Lanyard Layer */}
       <LanyardWrapper />
 
-      <div className="max-w-5xl mx-auto px-6 relative z-0">
+      <div className="max-w-5xl mx-auto px-6 relative z-20 pointer-events-none">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Headline, Bio, Actions (7 Cols) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-7 space-y-6 pt-2"
+            className="lg:col-span-7 space-y-6 pt-2 pointer-events-auto"
           >
             {/* Availability & Location Badge */}
             <motion.div variants={fadeSlideRight} className="flex flex-wrap items-center gap-3">
@@ -158,10 +168,11 @@ export const Hero: React.FC = () => {
             {/* Action CTAs with Interactive Rolling Icons & Rolling Text */}
             <motion.div
               variants={fadeSlideUp}
-              className="pt-2 flex flex-wrap items-center gap-3.5 relative z-20"
+              className="pt-2 flex flex-wrap items-center gap-3.5 relative z-20 pointer-events-auto"
             >
               <motion.a
                 href="#work"
+                onClick={(e) => handleScrollTo(e, "work")}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="group inline-flex items-center gap-2 text-sm font-medium bg-maroon-800 dark:bg-maroon-400 text-white dark:text-zinc-950 hover:bg-maroon-900 dark:hover:bg-maroon-300 px-5 py-2.5 rounded-full transition-all shadow-[0_2px_8px_rgba(131,40,65,0.18)] dark:shadow-[0_2px_8px_rgba(237,122,148,0.2)] pointer-events-auto cursor-pointer"
@@ -172,6 +183,7 @@ export const Hero: React.FC = () => {
 
               <motion.a
                 href="#contact"
+                onClick={(e) => handleScrollTo(e, "contact")}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="group inline-flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-5 py-2.5 rounded-full transition-all pointer-events-auto cursor-pointer"
@@ -181,12 +193,12 @@ export const Hero: React.FC = () => {
               </motion.a>
 
               <a
-                href={personalInfo.socials.website}
+                href={personalInfo.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-maroon-700 dark:hover:text-maroon-400 px-3 py-2 transition-colors ml-auto sm:ml-0 pointer-events-auto cursor-pointer"
               >
-                <RollingText>Framer Mirror</RollingText>
+                <RollingText>Instagram</RollingText>
                 <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
             </motion.div>

@@ -8,6 +8,7 @@ import { projects, Project, personalInfo } from "@/data/portfolioData";
 import { ProjectModal } from "./ProjectModal";
 import { NumberTicker } from "./ui/number-ticker";
 import { ScrambleText } from "./ui/scramble-text";
+import { RollingText } from "./ui/rolling-text";
 
 export const SelectedWork: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -303,7 +304,8 @@ function ProjectCardComponent({
         </div>
 
         <span className="inline-flex items-center gap-1 text-xs font-medium text-zinc-400 dark:text-zinc-500 group-hover:text-maroon-700 dark:group-hover:text-maroon-400 transition-colors">
-          Details <ArrowUpRight className="w-3 h-3" />
+          <RollingText>Details</RollingText>
+          <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
         </span>
       </div>
     </div>

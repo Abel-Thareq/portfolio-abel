@@ -6,6 +6,7 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { ChevronRight, ChevronLeft, ArrowUpRight } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
 import { ThemeToggleButton } from "./ThemeToggleButton";
+import { RollingText } from "./ui/rolling-text";
 
 interface NavItem {
   id: string;
@@ -155,9 +156,9 @@ export const Navigation: React.FC = () => {
                     key={item.id}
                     href={`#${item.id}`}
                     onClick={(e) => handleHeroNavClick(e, item.id)}
-                    className="hover:text-zinc-950 dark:hover:text-white transition-colors"
+                    className="group hover:text-zinc-950 dark:hover:text-white transition-colors cursor-pointer"
                   >
-                    {item.label}
+                    <RollingText>{item.label}</RollingText>
                   </a>
                 ))}
               </nav>
@@ -170,10 +171,10 @@ export const Navigation: React.FC = () => {
                   href={personalInfo.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 bg-white dark:bg-zinc-900 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+                  className="group inline-flex items-center gap-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 bg-white dark:bg-zinc-900 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)] cursor-pointer"
                 >
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-400" />
+                  <RollingText>LinkedIn</RollingText>
+                  <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
                 </a>
               </div>
             </div>
@@ -277,7 +278,7 @@ export const Navigation: React.FC = () => {
                             key={item.id}
                             href={`#${item.id}`}
                             onClick={(e) => handleIslandNavClick(e, item.id)}
-                            className={`relative h-[36px] px-3.5 flex items-center justify-center text-xs sm:text-[13px] rounded-full transition-colors duration-200 whitespace-nowrap ${
+                            className={`group relative h-[36px] px-3.5 flex items-center justify-center text-xs sm:text-[13px] rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer ${
                               isChosen
                                 ? "text-maroon-800 dark:text-maroon-300 font-semibold"
                                 : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white font-medium"
@@ -298,7 +299,7 @@ export const Navigation: React.FC = () => {
                                 <div className="absolute top-[1px] inset-x-2 h-[42%] rounded-full bg-gradient-to-b from-white/60 dark:from-white/30 to-transparent pointer-events-none" />
                               </motion.div>
                             )}
-                            {item.label}
+                            <RollingText>{item.label}</RollingText>
                           </a>
                         );
                       })}

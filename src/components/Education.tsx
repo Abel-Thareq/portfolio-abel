@@ -130,9 +130,9 @@ export const Education: React.FC = () => {
                         <span className="inline-flex items-center gap-1.5 text-xs font-mono text-maroon-800 dark:text-maroon-300 bg-maroon-50 dark:bg-maroon-950/40 border border-maroon-200/60 dark:border-maroon-800/60 px-2.5 py-1 rounded-full">
                           <Award className="w-3 h-3" />
                           <span>Grade:</span>
-                          {edu.grade.includes("3.92") ? (
+                          {edu.grade.includes("3.55") ? (
                             <span className="inline-flex items-center">
-                              <NumberTicker value={3.92} decimalPlaces={2} />
+                              <NumberTicker value={3.55} decimalPlaces={2} />
                               <span>&nbsp;/ 4.00</span>
                             </span>
                           ) : (

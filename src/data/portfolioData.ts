@@ -93,6 +93,7 @@ export const educations: EducationItem[] = [
     abbreviation: "UNTIDAR",
     degree: "Bachelor's Degree in Electrical Engineering",
     period: "Jun 2022 – Jul 2026",
+    grade: "3.55 / 4.00",
     specialization: "Computer Systems & Information",
     logo: "/logos/untidar.png",
     description: "Specialized in Computer Systems & Information. Active in software development, practical information systems (SiBMN), and data engineering initiatives.",

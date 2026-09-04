@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { Copy, Check, ArrowUpRight, Mail } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
+import { RollingText } from "./ui/rolling-text";
 
 const slideUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -80,10 +81,10 @@ export const Footer: React.FC = () => {
               href={`mailto:${personalInfo.email}`}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 text-sm font-medium bg-maroon-800 dark:bg-maroon-400 text-white dark:text-zinc-950 hover:bg-maroon-900 dark:hover:bg-maroon-300 px-5 py-3 rounded-full transition-colors shadow-[0_2px_8px_rgba(131,40,65,0.18)] dark:shadow-[0_2px_8px_rgba(237,122,148,0.2)]"
+              className="group inline-flex items-center gap-2.5 text-sm font-medium bg-maroon-800 dark:bg-maroon-400 text-white dark:text-zinc-950 hover:bg-maroon-900 dark:hover:bg-maroon-300 px-5 py-3 rounded-full transition-all shadow-[0_2px_8px_rgba(131,40,65,0.18)] dark:shadow-[0_2px_8px_rgba(237,122,148,0.2)] cursor-pointer"
             >
-              <Mail className="w-4 h-4" />
-              <span>Send an Email</span>
+              <Mail className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
+              <RollingText>Send an Email</RollingText>
             </motion.a>
 
             {/* Quick Copy Button */}
@@ -91,17 +92,17 @@ export const Footer: React.FC = () => {
               onClick={handleCopyEmail}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-5 py-3 rounded-full transition-all"
+              className="group inline-flex items-center gap-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-5 py-3 rounded-full transition-all cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-maroon-600 dark:text-maroon-400" />
+                  <Check className="w-4 h-4 text-maroon-600 dark:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
                   <span className="text-maroon-700 dark:text-maroon-400">Email Copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4 text-zinc-400" />
-                  <span>{personalInfo.email}</span>
+                  <Copy className="w-4 h-4 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
+                  <RollingText>{personalInfo.email}</RollingText>
                 </>
               )}
             </motion.button>
@@ -117,30 +118,30 @@ export const Footer: React.FC = () => {
                 href={personalInfo.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors"
+                className="group inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors cursor-pointer"
               >
-                <span>LinkedIn</span>
-                <ArrowUpRight className="w-3 h-3 text-zinc-400" />
+                <RollingText>LinkedIn</RollingText>
+                <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
 
               <a
                 href={personalInfo.socials.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors"
+                className="group inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors cursor-pointer"
               >
-                <span>Framer Portfolio</span>
-                <ArrowUpRight className="w-3 h-3 text-zinc-400" />
+                <RollingText>Framer Portfolio</RollingText>
+                <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
 
               <a
                 href={personalInfo.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors"
+                className="group inline-flex items-center gap-1 hover:text-maroon-700 dark:hover:text-maroon-400 transition-colors cursor-pointer"
               >
-                <span>GitHub</span>
-                <ArrowUpRight className="w-3 h-3 text-zinc-400" />
+                <RollingText>GitHub</RollingText>
+                <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
             </div>
 

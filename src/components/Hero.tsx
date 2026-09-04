@@ -7,6 +7,7 @@ import { personalInfo } from "@/data/portfolioData";
 import { LanyardWrapper } from "./LanyardWrapper";
 import { NumberTicker } from "./ui/number-ticker";
 import { ScrambleText } from "./ui/scramble-text";
+import { RollingText } from "./ui/rolling-text";
 
 // Dynamic rotating roles requested by user
 const dynamicRoles = [
@@ -105,7 +106,7 @@ export const Hero: React.FC = () => {
             <motion.div variants={fadeSlideRight} className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 text-xs font-normal text-zinc-600 dark:text-zinc-300 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 px-3.5 py-1.5 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-maroon-500 animate-pulse" />
-                <ScrambleText text="Available for software engineering roles" speed={28} />
+                <ScrambleText text="Available for work / Collaboration" speed={28} />
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
                 <MapPin className="w-3.5 h-3.5 text-zinc-400" />
@@ -154,7 +155,7 @@ export const Hero: React.FC = () => {
               </span>
             </motion.div>
 
-            {/* Action CTAs */}
+            {/* Action CTAs with Interactive Rolling Icons & Rolling Text */}
             <motion.div
               variants={fadeSlideUp}
               className="pt-2 flex flex-wrap items-center gap-3.5 relative z-20"
@@ -163,39 +164,39 @@ export const Hero: React.FC = () => {
                 href="#work"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 text-sm font-medium bg-maroon-800 dark:bg-maroon-400 text-white dark:text-zinc-950 hover:bg-maroon-900 dark:hover:bg-maroon-300 px-5 py-2.5 rounded-full transition-colors shadow-[0_2px_8px_rgba(131,40,65,0.18)] dark:shadow-[0_2px_8px_rgba(237,122,148,0.2)] pointer-events-auto"
+                className="group inline-flex items-center gap-2 text-sm font-medium bg-maroon-800 dark:bg-maroon-400 text-white dark:text-zinc-950 hover:bg-maroon-900 dark:hover:bg-maroon-300 px-5 py-2.5 rounded-full transition-all shadow-[0_2px_8px_rgba(131,40,65,0.18)] dark:shadow-[0_2px_8px_rgba(237,122,148,0.2)] pointer-events-auto cursor-pointer"
               >
-                <span>View Selected Work</span>
-                <ArrowDown className="w-3.5 h-3.5" />
+                <RollingText>View Selected Work</RollingText>
+                <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
               </motion.a>
 
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-5 py-2.5 rounded-full transition-all pointer-events-auto"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-5 py-2.5 rounded-full transition-all pointer-events-auto cursor-pointer"
               >
-                <Mail className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
-                <span>Get in Touch</span>
+                <Mail className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
+                <RollingText>Get in Touch</RollingText>
               </motion.a>
 
               <a
                 href={personalInfo.socials.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-maroon-700 dark:hover:text-maroon-400 px-3 py-2 transition-colors ml-auto sm:ml-0 pointer-events-auto"
+                className="group inline-flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-maroon-700 dark:hover:text-maroon-400 px-3 py-2 transition-colors ml-auto sm:ml-0 pointer-events-auto cursor-pointer"
               >
-                <span>Framer Mirror</span>
-                <ArrowUpRight className="w-3 h-3 text-zinc-400" />
+                <RollingText>Framer Mirror</RollingText>
+                <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
               </a>
             </motion.div>
 
-            {/* Quick Metrics Strip with Rolling Number Counters */}
+            {/* Quick Metrics Strip with Rolling Number Counters (3 Authentic Cards) */}
             <motion.div
               variants={fadeSlideUp}
-              className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl"
+              className="pt-4 grid grid-cols-3 gap-3 max-w-lg"
             >
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+              <div className="p-3.5 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs shadow-xs">
                 <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
                   <NumberTicker value={4} padZero suffix="+" delay={0.2} />
                 </div>
@@ -204,7 +205,7 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+              <div className="p-3.5 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs shadow-xs">
                 <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
                   <NumberTicker value={20} delay={0.3} />
                 </div>
@@ -213,21 +214,12 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
+              <div className="p-3.5 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs shadow-xs">
                 <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
-                  <NumberTicker value={3.92} decimalPlaces={2} delay={0.4} />
+                  <NumberTicker value={3.55} decimalPlaces={2} delay={0.4} />
                 </div>
                 <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
                   Scholastic GPA
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800 backdrop-blur-xs">
-                <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center">
-                  <NumberTicker value={100} suffix="%" delay={0.5} />
-                </div>
-                <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
-                  Delivery Rate
                 </div>
               </div>
             </motion.div>

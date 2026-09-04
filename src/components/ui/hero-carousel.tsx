@@ -16,6 +16,7 @@ import {
 } from "framer-motion";
 import { FileDown, ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { RollingText } from "./rolling-text";
 
 export interface HeroCarouselItem {
   /** Stable key; falls back to the index. @default undefined */
@@ -342,18 +343,18 @@ export function HeroCarousel({
             onClick={() => go(index - 1)}
             disabled={index === 0}
             aria-label="Previous certificate"
-            className="w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
           </button>
           <button
             type="button"
             onClick={() => go(index + 1)}
             disabled={index === last}
             aria-label="Next certificate"
-            className="w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="group w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:border-white/50 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
           </button>
         </div>
       </div>
@@ -396,10 +397,10 @@ export function HeroCarousel({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Download Certificate as PDF"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wider uppercase transition-all duration-200 bg-white text-zinc-950 hover:bg-zinc-200 active:scale-95 shadow-lg border border-white/40"
+                className="group inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono font-medium tracking-wider uppercase transition-all duration-200 bg-white text-zinc-950 hover:bg-zinc-200 active:scale-95 shadow-lg border border-white/40 cursor-pointer"
               >
-                <FileDown className="w-3.5 h-3.5 text-maroon-700" />
-                <span>Download as PDF</span>
+                <FileDown className="w-3.5 h-3.5 text-maroon-700 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform flex-shrink-0" />
+                <RollingText>Download as PDF</RollingText>
               </a>
             </div>
           </div>

@@ -37,6 +37,8 @@ import {
   Plus,
   Minus,
   Check,
+  Share2,
+  ShoppingCart,
 } from "lucide-react";
 
 // ================= TYPES & DATA =================
@@ -778,7 +780,7 @@ export const PpobLiveSimulator: React.FC = () => {
                 {/* Flutter Authentic Header for TagihanPage */}
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -941,7 +943,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1045,7 +1047,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1143,7 +1145,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1243,7 +1245,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1346,7 +1348,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1437,7 +1439,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1555,7 +1557,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1610,7 +1612,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1903,7 +1905,7 @@ export const PpobLiveSimulator: React.FC = () => {
               <div className="min-h-full bg-white flex flex-col">
                 <div className="relative h-[76px] w-full">
                   <Image
-                    src="/assets/ppob/images/header.png"
+                    src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
                     fill
                     className="object-cover"
@@ -1955,26 +1957,37 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 15. FLOW: SHOP DETAIL (DetailShopPage) */}
             {currentFlow === "shop_detail" && selectedShopProduct && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for DetailShopPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Detail Produk</span>
+                  <span className="text-sm font-bold text-zinc-900">Detail Produk</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-700 transition cursor-pointer"
+                      aria-label="Bagikan"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={handleBack}
+                      className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-700 transition cursor-pointer relative"
+                      aria-label="Keranjang"
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-[#ED1C24] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                        1
+                      </span>
+                    </button>
                   </div>
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-4">
+                <div className="p-4 space-y-4">
                   <div className="w-full h-44 relative rounded-2xl bg-zinc-50 border border-zinc-200/80 overflow-hidden flex items-center justify-center p-3">
                     <Image
                       src={selectedShopProduct.image}
@@ -2082,26 +2095,20 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 16. FLOW: SHOP CHECKOUT (CheckoutPage) */}
             {currentFlow === "shop_checkout" && selectedShopProduct && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for CheckoutPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Checkout Pesanan</span>
-                  </div>
+                  <span className="text-sm font-bold text-zinc-900">Checkout Pesanan</span>
+                  <div className="w-8" />
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-3.5">
+                <div className="p-4 space-y-3.5">
                   {/* Alamat Pengiriman */}
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-xl">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-zinc-900 mb-1">
@@ -2265,26 +2272,20 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 18. FLOW: CHANGE PIN (ChangePINPage) */}
             {currentFlow === "change_pin" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for ChangePINPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Pengaturan PIN Keamanan</span>
-                  </div>
+                  <span className="text-sm font-bold text-zinc-900">Pengaturan PIN Keamanan</span>
+                  <div className="w-8" />
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-4">
+                <div className="p-4 space-y-4">
                   <div className="text-center py-2">
                     <div className="w-14 h-14 rounded-full bg-red-50 text-[#ED1C24] mx-auto flex items-center justify-center mb-2">
                       <KeyRound className="w-7 h-7" />
@@ -2374,26 +2375,20 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 19. FLOW: MY DEVICES (MyDevicesPage) */}
             {currentFlow === "my_devices" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for MyDevicesPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Perangkat Terhubung</span>
-                  </div>
+                  <span className="text-sm font-bold text-zinc-900">Perangkat Terhubung</span>
+                  <div className="w-8" />
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-3">
+                <div className="p-4 space-y-3">
                   <p className="text-xs text-zinc-500 leading-relaxed">
                     Daftar perangkat yang saat ini memiliki sesi aktif ke akun Merah Putih Pay Anda:
                   </p>
@@ -2469,26 +2464,20 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 20. FLOW: PENGATURAN STRUK (PengaturanStrukPage) */}
             {currentFlow === "pengaturan_struk" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for PengaturanStrukPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Pengaturan Format Struk</span>
-                  </div>
+                  <span className="text-sm font-bold text-zinc-900">Pengaturan Format Struk</span>
+                  <div className="w-8" />
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-3.5">
+                <div className="p-4 space-y-3.5">
                   {receiptSavedFeedback && (
                     <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -2594,26 +2583,20 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 21. FLOW: HELP CENTER (PilihPusatBantuanPage) */}
             {currentFlow === "help_center" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
-                <div className="relative h-[76px] w-full">
-                  <Image
-                    src="/assets/ppob/images/header.png"
-                    alt="Header Background"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                {/* Native Authentic AppBar for HelpCenterPage */}
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
-                    <span className="text-xs font-bold text-[#ED1C24]">Pusat Bantuan 24/7</span>
-                  </div>
+                  <span className="text-sm font-bold text-zinc-900">Pusat Bantuan 24/7</span>
+                  <div className="w-8" />
                 </div>
 
-                <div className="p-4 pt-5.5 space-y-4">
+                <div className="p-4 space-y-4">
                   {/* Saluran Kontak CS */}
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <a

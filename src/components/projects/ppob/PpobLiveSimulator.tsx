@@ -20,6 +20,23 @@ import {
   RefreshCw,
   ChevronRight,
   ShieldCheck,
+  ShoppingBag,
+  Star,
+  MapPin,
+  Truck,
+  Smartphone,
+  Laptop,
+  Monitor,
+  Printer,
+  MessageCircle,
+  Mail,
+  Phone,
+  HelpCircle,
+  Trash2,
+  KeyRound,
+  Plus,
+  Minus,
+  Check,
 } from "lucide-react";
 
 // ================= TYPES & DATA =================
@@ -40,7 +57,14 @@ export type FlowScreen =
   | "byu"
   | "pulsa"
   | "listrik"
-  | "receipt";
+  | "receipt"
+  | "shop_detail"
+  | "shop_checkout"
+  | "shop_success"
+  | "change_pin"
+  | "my_devices"
+  | "pengaturan_struk"
+  | "help_center";
 
 interface TransactionRecord {
   id: string;
@@ -106,6 +130,122 @@ const EWALLET_ITEMS = [
   { id: "shopeepay", title: "ShopeePay", icon: "/assets/ppob/images/shopeepay.png" },
   { id: "linkaja", title: "LinkAja", icon: "/assets/ppob/images/linkaja.png" },
   { id: "isaku", title: "i.saku", icon: "/assets/ppob/images/isaku.png" },
+];
+
+// Authentic Shop Products from Flutter ShopPage
+const SHOP_PRODUCTS = [
+  {
+    id: "prod-1",
+    title: "Keyboard Mechanical RGB",
+    price: 350000,
+    originalPrice: 500000,
+    rating: "4.9",
+    sales: "15+ terjual",
+    stock: 24,
+    weight: "0.8 kg",
+    category: "Elektronik",
+    location: "Kota Jakarta",
+    image: "/assets/ppob/images/Keyboard_Mechanical.png",
+    description: "Keyboard Mechanical Outemu Blue Switch dengan RGB backlight 16 mode, anti-ghosting full keys, dan build kokoh untuk loket kasir & operasional PPOB.",
+  },
+  {
+    id: "prod-2",
+    title: "Headphone Gaming Bass",
+    price: 200000,
+    originalPrice: 300000,
+    rating: "4.6",
+    sales: "25+ terjual",
+    stock: 35,
+    weight: "0.4 kg",
+    category: "Elektronik",
+    location: "Kota Yogyakarta",
+    image: "/assets/ppob/images/Headphone_Gaming.png",
+    description: "Headset dengan driver 50mm dynamic sound, mikrofon noise-cancelling, earpad empuk memory foam, kompatibel untuk PC, laptop & smartphone.",
+  },
+  {
+    id: "prod-3",
+    title: "Laptop Stand Alumunium",
+    price: 80000,
+    originalPrice: 120000,
+    rating: "4.5",
+    sales: "40+ terjual",
+    stock: 50,
+    weight: "0.5 kg",
+    category: "Office & Stationery",
+    location: "Kota Semarang",
+    image: "/assets/ppob/images/Laptop_Stand.png",
+    description: "Stand laptop ergonomis dengan material full alumunium alloy, 6 level pengaturan ketinggian, dan bantalan silikon anti-slip.",
+  },
+  {
+    id: "prod-4",
+    title: "Cooling Pad Laptop Silent",
+    price: 25000,
+    originalPrice: 40000,
+    rating: "5.0",
+    sales: "20+ terjual",
+    stock: 42,
+    weight: "0.6 kg",
+    category: "Elektronik",
+    location: "Kota Tasikmalaya",
+    image: "/assets/ppob/images/Cooling_Pad_Laptop.png",
+    description: "Cooler laptop dengan 2 kipas LED silent cooling fan 140mm, menjaga suhu laptop tetap stabil saat operasional PPOB seharian.",
+  },
+  {
+    id: "prod-5",
+    title: "Mouse Wireless Ergonomis",
+    price: 75000,
+    originalPrice: 120000,
+    rating: "4.8",
+    sales: "50+ terjual",
+    stock: 60,
+    weight: "0.2 kg",
+    category: "Elektronik",
+    location: "Kota Bandung",
+    image: "/assets/ppob/images/Mouse_Wireless.png",
+    description: "Mouse nirkabel 2.4GHz dengan nano receiver, sensor presisi 1600 DPI hemat daya baterai hingga 12 bulan pemakaian.",
+  },
+  {
+    id: "prod-6",
+    title: "Webcam HD 1080p Mic",
+    price: 150000,
+    originalPrice: 200000,
+    rating: "4.7",
+    sales: "30+ terjual",
+    stock: 18,
+    weight: "0.3 kg",
+    category: "Elektronik",
+    location: "Kota Surabaya",
+    image: "/assets/ppob/images/Webcam_HD.png",
+    description: "Webcam resolusi Full HD 1080p 30fps dengan built-in dual microphone stereo untuk video conference dan verifikasi KYC nasabah.",
+  },
+  {
+    id: "prod-7",
+    title: "Notebook Premium Hardcover",
+    price: 45000,
+    originalPrice: 60000,
+    rating: "4.3",
+    sales: "35+ terjual",
+    stock: 80,
+    weight: "0.3 kg",
+    category: "Office & Stationery",
+    location: "Kota Bandung",
+    image: "/assets/ppob/images/Notebook_Premium.png",
+    description: "Buku catatan kas harian PPOB 160 halaman kertas bookpaper 80gsm, jilid jahit benang rapi dengan bookmark pita elegan.",
+  },
+  {
+    id: "prod-8",
+    title: "Pulpen Parker Eksklusif",
+    price: 120000,
+    originalPrice: 180000,
+    rating: "4.8",
+    sales: "28+ terjual",
+    stock: 15,
+    weight: "0.1 kg",
+    category: "Office & Stationery",
+    location: "Kota Jakarta",
+    image: "/assets/ppob/images/Pulpen_Parker.png",
+    description: "Pulpen rollerball tinta hitam pekat dengan bodi stainless steel bergaransi resmi, cocok untuk tanda tangan kontrak dan dokumen penting.",
+  },
 ];
 
 // E-Money Items from EMoneyPage
@@ -280,6 +420,67 @@ export const PpobLiveSimulator: React.FC = () => {
     customerName?: string;
   } | null>(null);
 
+  // Shop Flow State
+  const [selectedShopProduct, setSelectedShopProduct] = useState<(typeof SHOP_PRODUCTS)[0]>(SHOP_PRODUCTS[0]);
+  const [shopQty, setShopQty] = useState<number>(1);
+  const [shopCategory, setShopCategory] = useState<string>("Semua");
+  const [cartToast, setCartToast] = useState<string | null>(null);
+  const [activeShopOrder, setActiveShopOrder] = useState<{
+    orderId: string;
+    product: (typeof SHOP_PRODUCTS)[0];
+    qty: number;
+    total: number;
+    date: string;
+    courier: string;
+  } | null>(null);
+
+  // Akun: Change PIN State
+  const [oldPinInput, setOldPinInput] = useState<string>("");
+  const [newPinInput, setNewPinInput] = useState<string>("");
+  const [confirmPinInput, setConfirmPinInput] = useState<string>("");
+  const [pinChangeSuccess, setPinChangeSuccess] = useState<boolean>(false);
+
+  // Akun: My Devices State
+  const [connectedDevices, setConnectedDevices] = useState([
+    { id: "dev-1", name: "iPhone 15 Pro", os: "iOS 18.1 • Aplikasi Resmi", ip: "180.252.112.45", location: "Tasikmalaya, Jawa Barat", isCurrent: true, lastActive: "Online Sekarang" },
+    { id: "dev-2", name: "MacBook Pro M2", os: "macOS Sequoia • Safari 18", ip: "114.124.200.12", location: "Bandung, Jawa Barat", isCurrent: false, lastActive: "2 jam yang lalu" },
+    { id: "dev-3", name: "PC Desktop Windows 11", os: "Windows 11 • Chrome 128", ip: "103.111.89.20", location: "Jakarta Selatan", isCurrent: false, lastActive: "Kemarin, 19:30" },
+  ]);
+
+  // Akun: Receipt Settings State
+  const [storeName, setStoreName] = useState<string>("Loket Abel Cell PPOB");
+  const [storeAddress, setStoreAddress] = useState<string>("Jl. Merdeka No. 45, Tasikmalaya");
+  const [storePhone, setStorePhone] = useState<string>("0812-3456-7890");
+  const [receiptFooter, setReceiptFooter] = useState<string>("Terima Kasih Atas Kepercayaan Anda!");
+  const [receiptPaper, setReceiptPaper] = useState<"58mm" | "80mm">("58mm");
+  const [receiptSavedFeedback, setReceiptSavedFeedback] = useState<boolean>(false);
+
+  // FAQ Accordion State
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+
+  const openShopProductDetail = (prod: (typeof SHOP_PRODUCTS)[0]) => {
+    setSelectedShopProduct(prod);
+    setShopQty(1);
+    navigateTo("shop_detail");
+  };
+
+  const handleStartShopCheckout = () => {
+    navigateTo("shop_checkout");
+  };
+
+  const handleStartShopPayment = () => {
+    const total = selectedShopProduct.price * shopQty + 13000;
+    initiateTransaction({
+      type: "shop",
+      title: `Beli ${selectedShopProduct.title}`,
+      provider: "Shop PPOB",
+      targetNumber: "ORD-MPP-" + Math.floor(100000 + Math.random() * 900000),
+      amount: total,
+      adminFee: 1000,
+      customerName: "Abel Thareq",
+    });
+  };
+
   // Currency Formatter
   const formatRupiah = (val: number): string => {
     return new Intl.NumberFormat("id-ID", {
@@ -399,8 +600,21 @@ export const PpobLiveSimulator: React.FC = () => {
           customerName: pendingTx.customerName || "Abel Thareq",
         };
         setTransactions((prev) => [newRecord, ...prev]);
-        setActiveReceipt(newRecord);
-        navigateTo("receipt");
+
+        if (pendingTx.type === "shop") {
+          setActiveShopOrder({
+            orderId: newRecord.refNumber,
+            product: selectedShopProduct,
+            qty: shopQty,
+            total: pendingTx.total,
+            date: newRecord.date,
+            courier: "J&T Express (Resi: JT" + Math.floor(100000000 + Math.random() * 900000000) + ")",
+          });
+          navigateTo("shop_success");
+        } else {
+          setActiveReceipt(newRecord);
+          navigateTo("receipt");
+        }
         setPendingTx(null);
       }
     }, 600);
@@ -1738,7 +1952,747 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 15. FLOW: MAIN TABS (Home, Mutasi, Akun, Shop, Mitra) */}
+            {/* 15. FLOW: SHOP DETAIL (DetailShopPage) */}
+            {currentFlow === "shop_detail" && selectedShopProduct && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Detail Produk</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-4">
+                  <div className="w-full h-44 relative rounded-2xl bg-zinc-50 border border-zinc-200/80 overflow-hidden flex items-center justify-center p-3">
+                    <Image
+                      src={selectedShopProduct.image}
+                      alt={selectedShopProduct.title}
+                      fill
+                      className="object-contain p-3"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-2 text-xs text-zinc-500">
+                      <span className="flex items-center gap-1 font-bold text-amber-500">
+                        <Star className="w-3.5 h-3.5 fill-amber-400" /> {selectedShopProduct.rating}
+                      </span>
+                      <span>•</span>
+                      <span>{selectedShopProduct.sales}</span>
+                      <span>•</span>
+                      <span className="flex items-center gap-0.5 text-zinc-400">
+                        <MapPin className="w-3 h-3" /> {selectedShopProduct.location}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-bold text-zinc-900 mt-1">{selectedShopProduct.title}</h3>
+
+                    <div className="flex items-baseline gap-2 mt-1.5">
+                      <span className="text-lg font-bold text-[#ED1C24] font-mono">
+                        {formatRupiah(selectedShopProduct.price)}
+                      </span>
+                      <span className="text-xs text-zinc-400 line-through font-mono">
+                        {formatRupiah(selectedShopProduct.originalPrice)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Spesifikasi Card */}
+                  <div className="bg-zinc-50 p-3 rounded-xl border border-zinc-200 text-xs space-y-1.5">
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Kategori</span>
+                      <span className="font-semibold text-zinc-800">{selectedShopProduct.category}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Berat Pengiriman</span>
+                      <span className="font-semibold text-zinc-800">{selectedShopProduct.weight}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Kondisi & Garansi</span>
+                      <span className="font-semibold text-zinc-800">Baru • Garansi 1 Tahun</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-zinc-400">Stok Tersedia</span>
+                      <span className="font-semibold text-emerald-600">{selectedShopProduct.stock} unit</span>
+                    </div>
+                  </div>
+
+                  {/* Deskripsi */}
+                  <div>
+                    <h4 className="text-xs font-bold text-zinc-800 mb-1">Deskripsi Produk</h4>
+                    <p className="text-xs text-zinc-600 leading-relaxed">{selectedShopProduct.description}</p>
+                  </div>
+
+                  {/* Qty Selector */}
+                  <div className="flex items-center justify-between p-3 bg-white border border-zinc-200 rounded-xl">
+                    <span className="text-xs font-bold text-zinc-800">Jumlah Beli</span>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setShopQty((q) => Math.max(1, q - 1))}
+                        className="w-7 h-7 rounded-lg border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 cursor-pointer"
+                      >
+                        <Minus className="w-3 h-3 text-zinc-700" />
+                      </button>
+                      <span className="text-xs font-bold font-mono w-6 text-center">{shopQty}</span>
+                      <button
+                        onClick={() => setShopQty((q) => Math.min(selectedShopProduct.stock, q + 1))}
+                        className="w-7 h-7 rounded-lg border border-zinc-300 flex items-center justify-center hover:bg-zinc-100 cursor-pointer"
+                      >
+                        <Plus className="w-3 h-3 text-zinc-700" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="pt-2 flex gap-2">
+                    <button
+                      onClick={() => {
+                        setCartToast(`"${selectedShopProduct.title}" (${shopQty}x) berhasil masuk keranjang!`);
+                        handleBack();
+                        setTimeout(() => setCartToast(null), 3000);
+                      }}
+                      className="flex-1 py-3 rounded-xl border border-zinc-300 hover:bg-zinc-50 text-zinc-800 text-xs font-bold cursor-pointer flex items-center justify-center gap-1.5"
+                    >
+                      <ShoppingBag className="w-4 h-4" />
+                      + Keranjang
+                    </button>
+                    <button
+                      onClick={handleStartShopCheckout}
+                      className="flex-1 py-3 rounded-xl bg-[#ED1C24] hover:bg-[#D3151D] text-white text-xs font-bold shadow-md cursor-pointer"
+                    >
+                      Beli Sekarang
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 16. FLOW: SHOP CHECKOUT (CheckoutPage) */}
+            {currentFlow === "shop_checkout" && selectedShopProduct && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Checkout Pesanan</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-3.5">
+                  {/* Alamat Pengiriman */}
+                  <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-xl">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-zinc-900 mb-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#ED1C24]" />
+                      <span>Alamat Pengiriman (Utama)</span>
+                    </div>
+                    <div className="text-xs font-semibold text-zinc-800">Abel Thareq | (+62) 812-3456-7890</div>
+                    <div className="text-[11px] text-zinc-500 mt-0.5 leading-relaxed">
+                      Jl. Merdeka No. 45, RT 02/RW 05, Cihideung, Kota Tasikmalaya, Jawa Barat 46115
+                    </div>
+                  </div>
+
+                  {/* Ringkasan Barang */}
+                  <div className="p-3 border border-zinc-200 rounded-xl bg-white flex gap-3 items-center">
+                    <div className="w-14 h-14 relative bg-zinc-50 rounded-lg shrink-0 overflow-hidden border border-zinc-100">
+                      <Image
+                        src={selectedShopProduct.image}
+                        alt={selectedShopProduct.title}
+                        fill
+                        className="object-contain p-1"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold text-xs text-zinc-900 truncate">{selectedShopProduct.title}</div>
+                      <div className="text-[10px] text-zinc-400 mt-0.5">Jumlah: {shopQty} unit</div>
+                      <div className="text-xs font-bold text-[#ED1C24] font-mono mt-0.5">
+                        {formatRupiah(selectedShopProduct.price * shopQty)}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Kurir Pengiriman */}
+                  <div className="p-3 bg-white border border-zinc-200 rounded-xl">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <div className="flex items-center gap-1.5 font-bold text-zinc-800">
+                        <Truck className="w-3.5 h-3.5 text-blue-600" />
+                        <span>Opsi Pengiriman</span>
+                      </div>
+                      <span className="font-mono font-bold text-zinc-900">Rp 12.000</span>
+                    </div>
+                    <div className="text-[11px] text-zinc-600">J&T Express - Reguler</div>
+                    <div className="text-[10px] text-emerald-600 mt-0.5">Estimasi tiba: 2 - 3 Hari Kerja</div>
+                  </div>
+
+                  {/* Metode Pembayaran */}
+                  <div className="p-3 bg-white border border-zinc-200 rounded-xl">
+                    <div className="text-xs font-bold text-zinc-800 mb-1">Metode Pembayaran</div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#ED1C24]" />
+                        <span className="text-xs font-semibold text-zinc-800">Saldo Merah Putih Pay</span>
+                      </div>
+                      <span className="text-[11px] font-mono text-zinc-500">
+                        Sisa: {formatRupiah(saldo)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Rincian Biaya */}
+                  <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-xl space-y-1.5 text-xs">
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Subtotal Produk</span>
+                      <span className="font-mono">{formatRupiah(selectedShopProduct.price * shopQty)}</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Ongkos Kirim</span>
+                      <span className="font-mono">Rp 12.000</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Biaya Layanan</span>
+                      <span className="font-mono">Rp 1.000</span>
+                    </div>
+                    <div className="pt-1.5 border-t border-zinc-200 flex justify-between font-bold text-zinc-900">
+                      <span>Total Pembayaran</span>
+                      <span className="text-sm text-[#ED1C24] font-mono">
+                        {formatRupiah(selectedShopProduct.price * shopQty + 13000)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tombol Bayar Sekarang */}
+                  <button
+                    onClick={handleStartShopPayment}
+                    className="w-full py-3.5 rounded-xl bg-[#ED1C24] hover:bg-[#D3151D] text-white text-xs font-bold shadow-md cursor-pointer"
+                  >
+                    Bayar Sekarang ({formatRupiah(selectedShopProduct.price * shopQty + 13000)})
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 17. FLOW: SHOP SUCCESS (ShopBerhasilPage) */}
+            {currentFlow === "shop_success" && activeShopOrder && (
+              <div className="min-h-full bg-zinc-50 p-4 flex flex-col justify-between">
+                <div className="bg-white rounded-2xl p-5 border border-zinc-200 shadow-sm space-y-4">
+                  <div className="text-center pb-3 border-b border-dashed border-zinc-200">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-2">
+                      <CheckCircle2 className="w-7 h-7" />
+                    </div>
+                    <div className="text-xs font-semibold text-emerald-600 tracking-wider">
+                      TRANSAKSI BELANJA BERHASIL
+                    </div>
+                    <div className="text-lg font-bold text-zinc-900 mt-1 font-mono">
+                      {formatRupiah(activeShopOrder.total)}
+                    </div>
+                    <div className="text-[11px] text-zinc-500 mt-0.5">{activeShopOrder.date}</div>
+                  </div>
+
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Nomor Pesanan</span>
+                      <span className="font-mono font-bold text-zinc-900">{activeShopOrder.orderId}</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Produk</span>
+                      <span className="font-medium text-zinc-800 text-right">{activeShopOrder.product.title}</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Jumlah</span>
+                      <span className="font-mono text-zinc-800">{activeShopOrder.qty} unit</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Metode Pengiriman</span>
+                      <span className="font-medium text-zinc-800 text-right">{activeShopOrder.courier}</span>
+                    </div>
+                    <div className="flex justify-between text-zinc-500">
+                      <span>Estimasi Pengiriman</span>
+                      <span className="text-emerald-600 font-semibold">2 - 3 Hari Kerja</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-200 text-[11px] text-zinc-600">
+                    <span className="font-bold text-zinc-800">Alamat Tujuan:</span>
+                    <p className="mt-0.5">Abel Thareq - Jl. Merdeka No. 45, Kota Tasikmalaya, Jawa Barat</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-4">
+                  <button
+                    onClick={() => {
+                      setNavStack(["home"]);
+                      setActiveTab(0);
+                    }}
+                    className="w-full py-3 rounded-xl bg-zinc-900 text-white text-xs font-bold hover:bg-zinc-800 cursor-pointer"
+                  >
+                    Kembali ke Shop
+                  </button>
+                  <button
+                    onClick={() => {
+                      setNavStack(["home"]);
+                      setActiveTab(1);
+                    }}
+                    className="w-full py-3 rounded-xl bg-white border border-zinc-200 text-zinc-800 text-xs font-semibold hover:bg-zinc-50 cursor-pointer"
+                  >
+                    Lihat Riwayat Transaksi
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 18. FLOW: CHANGE PIN (ChangePINPage) */}
+            {currentFlow === "change_pin" && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Pengaturan PIN Keamanan</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-4">
+                  <div className="text-center py-2">
+                    <div className="w-14 h-14 rounded-full bg-red-50 text-[#ED1C24] mx-auto flex items-center justify-center mb-2">
+                      <KeyRound className="w-7 h-7" />
+                    </div>
+                    <h4 className="font-bold text-sm text-zinc-900">Ubah 6-Digit PIN Akun</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5">
+                      PIN digunakan untuk mengotorisasi setiap transaksi dan transfer.
+                    </p>
+                  </div>
+
+                  {pinChangeSuccess && (
+                    <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>PIN berhasil diperbarui! Gunakan PIN baru untuk transaksi berikutnya.</span>
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-xs font-bold text-zinc-800">PIN Lama</label>
+                      <input
+                        type="password"
+                        maxLength={6}
+                        value={oldPinInput}
+                        onChange={(e) => setOldPinInput(e.target.value.replace(/\D/g, ""))}
+                        placeholder="••••••"
+                        className="mt-1 w-full p-3 rounded-xl border border-zinc-200 text-center font-mono text-base tracking-widest outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-zinc-800">PIN Baru (6 Digit)</label>
+                      <input
+                        type="password"
+                        maxLength={6}
+                        value={newPinInput}
+                        onChange={(e) => setNewPinInput(e.target.value.replace(/\D/g, ""))}
+                        placeholder="••••••"
+                        className="mt-1 w-full p-3 rounded-xl border border-zinc-200 text-center font-mono text-base tracking-widest outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-zinc-800">Konfirmasi PIN Baru</label>
+                      <input
+                        type="password"
+                        maxLength={6}
+                        value={confirmPinInput}
+                        onChange={(e) => setConfirmPinInput(e.target.value.replace(/\D/g, ""))}
+                        placeholder="••••••"
+                        className="mt-1 w-full p-3 rounded-xl border border-zinc-200 text-center font-mono text-base tracking-widest outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      if (!oldPinInput || oldPinInput.length !== 6) {
+                        alert("Harap masukkan 6 digit PIN lama Anda!");
+                        return;
+                      }
+                      if (!newPinInput || newPinInput.length !== 6) {
+                        alert("PIN baru harus terdiri dari 6 angka!");
+                        return;
+                      }
+                      if (newPinInput !== confirmPinInput) {
+                        alert("Konfirmasi PIN baru tidak sesuai!");
+                        return;
+                      }
+                      setPinChangeSuccess(true);
+                      setOldPinInput("");
+                      setNewPinInput("");
+                      setConfirmPinInput("");
+                      setTimeout(() => {
+                        handleBack();
+                        setPinChangeSuccess(false);
+                      }, 1800);
+                    }}
+                    className="w-full py-3.5 rounded-xl bg-[#ED1C24] hover:bg-[#D3151D] text-white text-xs font-bold shadow-md cursor-pointer mt-2"
+                  >
+                    Simpan PIN Baru
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 19. FLOW: MY DEVICES (MyDevicesPage) */}
+            {currentFlow === "my_devices" && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Perangkat Terhubung</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-3">
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    Daftar perangkat yang saat ini memiliki sesi aktif ke akun Merah Putih Pay Anda:
+                  </p>
+
+                  <div className="space-y-2">
+                    {connectedDevices.map((dev) => (
+                      <div
+                        key={dev.id}
+                        className={`p-3 rounded-xl border flex items-start justify-between ${
+                          dev.isCurrent ? "bg-emerald-50/50 border-emerald-200" : "bg-white border-zinc-200"
+                        }`}
+                      >
+                        <div className="flex gap-3">
+                          <div
+                            className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+                              dev.isCurrent ? "bg-emerald-100 text-emerald-700" : "bg-zinc-100 text-zinc-600"
+                            }`}
+                          >
+                            {dev.name.includes("iPhone") ? (
+                              <Smartphone className="w-4 h-4" />
+                            ) : dev.name.includes("MacBook") ? (
+                              <Laptop className="w-4 h-4" />
+                            ) : (
+                              <Monitor className="w-4 h-4" />
+                            )}
+                          </div>
+                          <div>
+                            <div className="font-bold text-xs text-zinc-900 flex items-center gap-1.5">
+                              <span>{dev.name}</span>
+                              {dev.isCurrent && (
+                                <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded-full font-semibold">
+                                  Perangkat Ini
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-[10px] text-zinc-400 mt-0.5">{dev.os}</div>
+                            <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
+                              {dev.ip} • {dev.location}
+                            </div>
+                            <div className="text-[9px] text-zinc-400 mt-1">{dev.lastActive}</div>
+                          </div>
+                        </div>
+
+                        {!dev.isCurrent && (
+                          <button
+                            onClick={() => {
+                              setConnectedDevices((prev) => prev.filter((d) => d.id !== dev.id));
+                              alert(`Sesi ${dev.name} berhasil diputuskan!`);
+                            }}
+                            className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg cursor-pointer"
+                            title="Putuskan Akses"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setConnectedDevices((prev) => prev.filter((d) => d.isCurrent));
+                      alert("Semua sesi perangkat lain telah berhasil di-logout!");
+                    }}
+                    className="w-full py-2.5 rounded-xl border border-red-200 bg-red-50 text-[#ED1C24] hover:bg-red-100 text-xs font-bold cursor-pointer mt-2"
+                  >
+                    Keluar dari Semua Perangkat Lain
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 20. FLOW: PENGATURAN STRUK (PengaturanStrukPage) */}
+            {currentFlow === "pengaturan_struk" && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Pengaturan Format Struk</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-3.5">
+                  {receiptSavedFeedback && (
+                    <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>Format struk berhasil disimpan! Struk transaksi berikutnya akan menggunakan data ini.</span>
+                    </div>
+                  )}
+
+                  {/* Form inputs */}
+                  <div className="space-y-2.5">
+                    <div>
+                      <label className="text-[11px] font-bold text-zinc-700">Nama Loket / Toko</label>
+                      <input
+                        type="text"
+                        value={storeName}
+                        onChange={(e) => setStoreName(e.target.value)}
+                        className="mt-1 w-full p-2.5 rounded-xl border border-zinc-200 text-xs font-semibold text-zinc-900 outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold text-zinc-700">Alamat Loket</label>
+                      <input
+                        type="text"
+                        value={storeAddress}
+                        onChange={(e) => setStoreAddress(e.target.value)}
+                        className="mt-1 w-full p-2.5 rounded-xl border border-zinc-200 text-xs text-zinc-900 outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold text-zinc-700">No. WhatsApp / HP</label>
+                      <input
+                        type="text"
+                        value={storePhone}
+                        onChange={(e) => setStorePhone(e.target.value)}
+                        className="mt-1 w-full p-2.5 rounded-xl border border-zinc-200 text-xs font-mono text-zinc-900 outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold text-zinc-700">Pesan Footer Struk</label>
+                      <input
+                        type="text"
+                        value={receiptFooter}
+                        onChange={(e) => setReceiptFooter(e.target.value)}
+                        className="mt-1 w-full p-2.5 rounded-xl border border-zinc-200 text-xs text-zinc-900 outline-none focus:border-[#ED1C24]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-bold text-zinc-700">Ukuran Printer Thermal</label>
+                      <div className="grid grid-cols-2 gap-2 mt-1">
+                        {(["58mm", "80mm"] as const).map((sz) => (
+                          <button
+                            key={sz}
+                            type="button"
+                            onClick={() => setReceiptPaper(sz)}
+                            className={`py-2 rounded-xl text-xs font-bold border cursor-pointer ${
+                              receiptPaper === sz
+                                ? "bg-[#ED1C24] text-white border-[#ED1C24]"
+                                : "bg-white text-zinc-700 border-zinc-200"
+                            }`}
+                          >
+                            Thermal {sz}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Live Thermal Preview */}
+                  <div className="p-3 bg-zinc-100 rounded-xl border border-dashed border-zinc-300">
+                    <div className="text-[10px] uppercase font-mono tracking-wider text-zinc-400 text-center mb-1.5">
+                      Preview Cetak Struk ({receiptPaper})
+                    </div>
+                    <div className="bg-white p-3 rounded-lg font-mono text-[10px] text-zinc-800 space-y-1 shadow-xs">
+                      <div className="text-center font-bold text-xs">{storeName}</div>
+                      <div className="text-center text-[9px] text-zinc-500">{storeAddress}</div>
+                      <div className="text-center text-[9px] text-zinc-500">Telp: {storePhone}</div>
+                      <div className="border-t border-dashed border-zinc-300 my-1" />
+                      <div className="flex justify-between">
+                        <span>TOKEN LISTRIK PLN</span>
+                        <span>Rp 52.500</span>
+                      </div>
+                      <div className="flex justify-between text-zinc-500">
+                        <span>ADMIN BANK</span>
+                        <span>Rp 2.500</span>
+                      </div>
+                      <div className="border-t border-dashed border-zinc-300 my-1" />
+                      <div className="text-center text-[9px] text-zinc-500">{receiptFooter}</div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setReceiptSavedFeedback(true);
+                      setTimeout(() => setReceiptSavedFeedback(false), 3000);
+                    }}
+                    className="w-full py-3.5 rounded-xl bg-[#ED1C24] hover:bg-[#D3151D] text-white text-xs font-bold shadow-md cursor-pointer"
+                  >
+                    Simpan Format Struk
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 21. FLOW: HELP CENTER (PilihPusatBantuanPage) */}
+            {currentFlow === "help_center" && (
+              <div className="min-h-full bg-white flex flex-col pb-20">
+                <div className="relative h-[76px] w-full">
+                  <Image
+                    src="/assets/ppob/images/header.png"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <button
+                    onClick={handleBack}
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
+                    <span className="text-xs font-bold text-[#ED1C24]">Pusat Bantuan 24/7</span>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-5.5 space-y-4">
+                  {/* Saluran Kontak CS */}
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <a
+                      href="https://wa.me/6281234567890"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors flex flex-col items-center cursor-pointer"
+                    >
+                      <MessageCircle className="w-5 h-5 text-emerald-600 mb-1" />
+                      <span className="text-[10px] font-bold text-emerald-800">WhatsApp CS</span>
+                      <span className="text-[9px] text-emerald-600">24 Jam</span>
+                    </a>
+                    <a
+                      href="mailto:support@merahputihpay.id"
+                      className="p-3 rounded-xl bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors flex flex-col items-center cursor-pointer"
+                    >
+                      <Mail className="w-5 h-5 text-blue-600 mb-1" />
+                      <span className="text-[10px] font-bold text-blue-800">Email Help</span>
+                      <span className="text-[9px] text-blue-600">Respon &lt;1 Jam</span>
+                    </a>
+                    <div
+                      onClick={() => alert("Call Center Bebas Pulsa: 1500-888 (Aktif 24/7)")}
+                      className="p-3 rounded-xl bg-purple-50 border border-purple-200 hover:bg-purple-100 transition-colors flex flex-col items-center cursor-pointer"
+                    >
+                      <Phone className="w-5 h-5 text-purple-600 mb-1" />
+                      <span className="text-[10px] font-bold text-purple-800">Call Center</span>
+                      <span className="text-[9px] text-purple-600">1500-888</span>
+                    </div>
+                  </div>
+
+                  {/* FAQ Section */}
+                  <div>
+                    <h4 className="text-xs font-bold text-zinc-900 mb-2">Pertanyaan Populer (FAQ)</h4>
+                    <div className="space-y-2">
+                      {[
+                        {
+                          q: "Berapa lama transaksi saldo masuk ke rekening tujuan?",
+                          a: "Transaksi transfer antar bank dan e-wallet diproses realtime (1-5 detik) melalui jaringan BI-FAST dan switching resmi.",
+                        },
+                        {
+                          q: "Bagaimana jika transaksi gagal tapi saldo terpotong?",
+                          a: "Sistem otomatis merefund saldo 100% ke Saldo Deposito dalam waktu maksimal 5 menit tanpa potongan biaya.",
+                        },
+                        {
+                          q: "Bagaimana cara mencetak struk transaksi?",
+                          a: "Buka tab Riwayat / Mutasi, klik transaksi yang diinginkan, lalu pilih 'Unduh Struk' atau hubungkan printer Bluetooth thermal Anda.",
+                        },
+                        {
+                          q: "Berapa limit maksimal transfer harian?",
+                          a: "Untuk akun Verified KYC seperti milik Anda, limit transaksi harian mencapai Rp 50.000.000 per hari.",
+                        },
+                      ].map((faq, i) => (
+                        <div
+                          key={i}
+                          onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
+                          className="border border-zinc-200 rounded-xl p-3 bg-white hover:border-zinc-300 transition-colors cursor-pointer"
+                        >
+                          <div className="flex items-center justify-between text-xs font-bold text-zinc-800">
+                            <span>{faq.q}</span>
+                            <ChevronRight
+                              className={`w-4 h-4 text-zinc-400 transition-transform ${
+                                openFaqIndex === i ? "rotate-90 text-[#ED1C24]" : ""
+                              }`}
+                            />
+                          </div>
+                          {openFaqIndex === i && (
+                            <p className="text-xs text-zinc-600 mt-2 pt-2 border-t border-zinc-100 leading-relaxed">
+                              {faq.a}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 22. FLOW: MAIN TABS (Home, Mutasi, Akun, Shop, Mitra) */}
             {currentFlow === "home" && (
               <>
                 {/* TAB 2: HOME FEED (100% Visual Parity with Flutter) */}
@@ -2043,39 +2997,91 @@ export const PpobLiveSimulator: React.FC = () => {
 
                 {/* TAB 0: SHOP (Aksesoris & Gadget PPOB) */}
                 {activeTab === 0 && (
-                  <div className="p-4 space-y-3">
-                    <h3 className="font-bold text-zinc-900 text-sm">Shop Peralatan Loket PPOB</h3>
-                    <div className="grid grid-cols-2 gap-2.5">
-                      {[
-                        { title: "Keyboard Mechanical", price: 285000, img: "/assets/ppob/images/Keyboard_Mechanical.png" },
-                        { title: "Headphone Gaming", price: 195000, img: "/assets/ppob/images/Headphone_Gaming.png" },
-                        { title: "Laptop Stand Alumunium", price: 125000, img: "/assets/ppob/images/Laptop_Stand.png" },
-                        { title: "Cooling Pad Laptop", price: 145000, img: "/assets/ppob/images/Cooling_Pad_Laptop.png" },
-                      ].map((prod) => (
-                        <div
-                          key={prod.title}
-                          className="bg-white p-3 rounded-2xl border border-zinc-200 shadow-xs flex flex-col justify-between"
+                  <div className="p-4 space-y-3 pb-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-bold text-zinc-900 text-sm">Shop Peralatan Loket PPOB</h3>
+                        <p className="text-[10px] text-zinc-400">Peralatan resmi mitra loket kasir & aksesoris</p>
+                      </div>
+                      <button
+                        onClick={() => alert("Keranjang belanja kosong. Silakan pilih produk!")}
+                        className="p-2 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 relative cursor-pointer"
+                      >
+                        <ShoppingBag className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {/* Filter Kategori Chips */}
+                    <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+                      {["Semua", "Elektronik", "Office & Stationery"].map((cat) => (
+                        <button
+                          key={cat}
+                          onClick={() => setShopCategory(cat)}
+                          className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                            shopCategory === cat
+                              ? "bg-[#ED1C24] text-white shadow-xs"
+                              : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300"
+                          }`}
                         >
-                          <div className="w-full h-24 relative mb-2">
-                            <Image
-                              src={prod.img}
-                              alt={prod.title}
-                              fill
-                              className="object-contain"
-                            />
-                          </div>
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Toast Notification */}
+                    {cartToast && (
+                      <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-[11px] text-emerald-800 flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span>{cartToast}</span>
+                      </div>
+                    )}
+
+                    {/* 2-Column Product Grid */}
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {SHOP_PRODUCTS.filter(
+                        (p) => shopCategory === "Semua" || p.category === shopCategory
+                      ).map((prod) => (
+                        <div
+                          key={prod.id}
+                          onClick={() => openShopProductDetail(prod)}
+                          className="bg-white p-2.5 rounded-2xl border border-zinc-200/90 shadow-xs hover:border-red-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
+                        >
                           <div>
-                            <div className="font-semibold text-xs text-zinc-800 line-clamp-1">{prod.title}</div>
-                            <div className="text-xs font-bold text-[#ED1C24] font-mono mt-0.5">
-                              {formatRupiah(prod.price)}
+                            <div className="w-full h-28 relative rounded-xl bg-zinc-50 overflow-hidden mb-2">
+                              <Image
+                                src={prod.image}
+                                alt={prod.title}
+                                fill
+                                className="object-contain p-2 group-hover:scale-105 transition-transform"
+                              />
+                            </div>
+                            <div className="flex items-center gap-1 text-[10px] text-amber-500 font-bold mb-0.5">
+                              <Star className="w-3 h-3 fill-amber-400" />
+                              <span>{prod.rating}</span>
+                              <span className="text-zinc-400 font-normal ml-1">• {prod.sales}</span>
+                            </div>
+                            <div className="font-semibold text-xs text-zinc-800 line-clamp-2 leading-tight">
+                              {prod.title}
                             </div>
                           </div>
-                          <button
-                            onClick={() => alert(`Simulasi: Membeli ${prod.title}`)}
-                            className="mt-2 py-1.5 rounded-lg bg-zinc-900 text-white text-[10px] font-semibold hover:bg-zinc-800 cursor-pointer"
-                          >
-                            Beli Produk
-                          </button>
+
+                          <div className="mt-2.5 pt-2 border-t border-zinc-100">
+                            <div className="text-[10px] text-zinc-400 line-through font-mono">
+                              {formatRupiah(prod.originalPrice)}
+                            </div>
+                            <div className="text-xs font-bold text-[#ED1C24] font-mono">
+                              {formatRupiah(prod.price)}
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openShopProductDetail(prod);
+                              }}
+                              className="mt-2 w-full py-1.5 rounded-lg bg-zinc-900 text-white text-[10px] font-semibold group-hover:bg-[#ED1C24] transition-colors cursor-pointer"
+                            >
+                              Beli Produk
+                            </button>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -2109,7 +3115,7 @@ export const PpobLiveSimulator: React.FC = () => {
 
                 {/* TAB 4: AKUN / PROFIL */}
                 {activeTab === 4 && (
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-3 pb-6">
                     <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-red-100 text-[#ED1C24] flex items-center justify-center font-bold text-sm">
                         AT
@@ -2117,7 +3123,7 @@ export const PpobLiveSimulator: React.FC = () => {
                       <div>
                         <div className="font-bold text-zinc-900 text-sm flex items-center gap-1.5">
                           <span>Abel Thareq</span>
-                          <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-mono">
+                          <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-mono font-semibold">
                             VERIFIED KYC
                           </span>
                         </div>
@@ -2127,22 +3133,31 @@ export const PpobLiveSimulator: React.FC = () => {
                     </div>
 
                     <div className="bg-white rounded-2xl border border-zinc-200 overflow-hidden text-xs">
+                      <div className="p-3 bg-zinc-50/80 border-b border-zinc-100 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                        Pengaturan Akun & Keamanan
+                      </div>
                       {[
-                        { label: "Pengaturan Keamanan & PIN", icon: Lock },
-                        { label: "Kelola Perangkat Saya", icon: ShieldCheck },
-                        { label: "Riwayat Transaksi Lengkap", icon: History, onClick: () => setActiveTab(1) },
-                        { label: "Pusat Bantuan & Layanan CS", icon: Headset },
+                        { label: "Pengaturan Keamanan & PIN", desc: "Ubah 6-digit PIN otorisasi", icon: KeyRound, onClick: () => navigateTo("change_pin") },
+                        { label: "Kelola Perangkat Saya", desc: "Lihat 3 perangkat aktif", icon: Smartphone, onClick: () => navigateTo("my_devices") },
+                        { label: "Pengaturan Format Struk", desc: "Nama loket & ukuran thermal", icon: Printer, onClick: () => navigateTo("pengaturan_struk") },
+                        { label: "Pusat Bantuan & Layanan CS", desc: "FAQ & WhatsApp 24 jam", icon: HelpCircle, onClick: () => navigateTo("help_center") },
+                        { label: "Riwayat Transaksi Lengkap", desc: "Lihat semua mutasi saldo", icon: History, onClick: () => setActiveTab(1) },
                       ].map((item, idx) => (
                         <div
                           key={item.label}
-                          onClick={item.onClick || (() => alert(`Membuka: ${item.label}`))}
-                          className={`p-3.5 flex items-center justify-between hover:bg-zinc-50 cursor-pointer ${
+                          onClick={item.onClick}
+                          className={`p-3.5 flex items-center justify-between hover:bg-zinc-50 transition-colors cursor-pointer ${
                             idx > 0 ? "border-t border-zinc-100" : ""
                           }`}
                         >
-                          <div className="flex items-center gap-2.5 text-zinc-700">
-                            <item.icon className="w-4 h-4 text-zinc-400" />
-                            <span>{item.label}</span>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-red-50 text-[#ED1C24] flex items-center justify-center">
+                              <item.icon className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-zinc-800">{item.label}</div>
+                              <div className="text-[10px] text-zinc-400">{item.desc}</div>
+                            </div>
                           </div>
                           <ChevronRight className="w-4 h-4 text-zinc-400" />
                         </div>

@@ -484,22 +484,9 @@ export const PpobLiveSimulator: React.FC = () => {
     }
   }, [activeTab, currentFlow]);
 
-  // Dynamic Status Bar Color & Frosted Glass adaptiveness
-  const isWhiteTop = useMemo(() => {
-    if (
-      currentFlow === "shop_detail" ||
-      currentFlow === "shop_checkout" ||
-      currentFlow === "change_pin" ||
-      currentFlow === "my_devices" ||
-      currentFlow === "pengaturan_struk" ||
-      currentFlow === "help_center" ||
-      currentFlow === "receipt"
-    ) {
-      return true;
-    }
-    // All 5 main tabs (Shop, Mutasi, Home, Agen Center, Akun) have signature red headers
-    return false;
-  }, [currentFlow]);
+  // Dynamic Status Bar Color & Frosted Glass adaptiveness:
+  // All screens now have signature red headers (#ED1C24 / backgroundtop.svg), ensuring full-bleed status bar
+  const isWhiteTop = false;
 
   const openShopProductDetail = (prod: (typeof SHOP_PRODUCTS)[0]) => {
     setSelectedShopProduct(prod);
@@ -770,100 +757,116 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* ================= FLOW SCREENS SWITCHER ================= */}
             <div
               ref={mainScrollRef}
-              className="w-full h-full overflow-y-auto relative pb-20 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className={`w-full h-full overflow-y-auto relative no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
+                currentFlow === "home" ? "pb-20" : "pb-4"
+              }`}
             >
-            {/* 1. FLOW: RECEIPT (Struk Transaksi) */}
+            {/* 1. FLOW: RECEIPT (Struk Transaksi - Authentic Full-Screen Red Header) */}
             {currentFlow === "receipt" && activeReceipt && (
-              <div className="p-4 pt-11 min-h-full bg-zinc-50 flex flex-col">
-                <div className="flex items-center justify-between mb-4">
+              <div className="min-h-full bg-[#F8F8FF] flex flex-col">
+                {/* Flutter Authentic Curved Red Header for Receipt */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleResetToHome}
-                    className="p-2 rounded-full hover:bg-zinc-200 text-zinc-700 cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    aria-label="Kembali ke Beranda"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <h3 className="font-semibold text-zinc-900 text-sm">Struk Transaksi</h3>
-                  <div className="w-8" />
-                </div>
-
-                <div className="bg-white rounded-2xl p-5 border border-zinc-200 shadow-sm space-y-4">
-                  <div className="text-center pb-3 border-b border-dashed border-zinc-200">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-2">
-                      <CheckCircle2 className="w-7 h-7" />
-                    </div>
-                    <div className="text-xs font-semibold text-emerald-600 tracking-wider">
-                      TRANSAKSI BERHASIL
-                    </div>
-                    <div className="text-lg font-bold text-zinc-900 mt-1 font-mono">
-                      {formatRupiah(activeReceipt.total)}
-                    </div>
-                    <div className="text-[11px] text-zinc-500 mt-0.5">{activeReceipt.date}</div>
-                  </div>
-
-                  {activeReceipt.tokenNumber && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-center">
-                      <div className="text-[10px] font-medium text-red-700 uppercase tracking-wider">
-                        Stroom / 20-Digit Token PLN
-                      </div>
-                      <div className="font-mono font-bold text-base text-red-900 tracking-widest mt-1 select-all">
-                        {activeReceipt.tokenNumber}
-                      </div>
-                      <div className="text-[9px] text-red-600 mt-0.5">
-                        Masukkan kode token ini ke kWh Meteran Anda
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">No. Referensi</span>
-                      <span className="font-mono text-zinc-800">{activeReceipt.refNumber}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Nama Pelanggan</span>
-                      <span className="font-medium text-zinc-800">{activeReceipt.customerName || "Abel Thareq"}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Nomor Tujuan / ID</span>
-                      <span className="font-mono text-zinc-800">{activeReceipt.targetNumber}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Layanan</span>
-                      <span className="text-zinc-800">{activeReceipt.title}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Metode Bayar</span>
-                      <span className="text-zinc-800">Saldo Merah Putih Pay</span>
-                    </div>
-                    <div className="pt-2 border-t border-dashed border-zinc-200 flex justify-between">
-                      <span className="text-zinc-500">Harga Produk</span>
-                      <span className="text-zinc-800 font-mono">{formatRupiah(activeReceipt.amount)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Biaya Admin</span>
-                      <span className="text-zinc-800 font-mono">{formatRupiah(activeReceipt.adminFee)}</span>
-                    </div>
-                    <div className="pt-2 border-t border-zinc-200 flex justify-between font-bold text-sm">
-                      <span className="text-zinc-900">Total Pembayaran</span>
-                      <span className="text-[#ED1C24] font-mono">{formatRupiah(activeReceipt.total)}</span>
-                    </div>
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Struk Transaksi
+                    </span>
                   </div>
                 </div>
 
-                <div className="mt-4 grid grid-cols-2 gap-2.5">
-                  <button
-                    onClick={() => alert("Struk berhasil disimpan ke galeri!")}
-                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-zinc-300 text-xs font-medium text-zinc-700 hover:bg-zinc-100 cursor-pointer"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    Simpan Struk
-                  </button>
-                  <button
-                    onClick={handleResetToHome}
-                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#ED1C24] text-xs font-medium text-white hover:bg-[#D3151D] cursor-pointer"
-                  >
-                    Selesai
-                  </button>
+                <div className="p-4 pt-3 flex-1 flex flex-col justify-between">
+                  <div className="bg-white rounded-2xl p-5 border border-zinc-200 shadow-sm space-y-4">
+                    <div className="text-center pb-3 border-b border-dashed border-zinc-200">
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-2">
+                        <CheckCircle2 className="w-7 h-7" />
+                      </div>
+                      <div className="text-xs font-semibold text-emerald-600 tracking-wider">
+                        TRANSAKSI BERHASIL
+                      </div>
+                      <div className="text-lg font-bold text-zinc-900 mt-1 font-mono">
+                        {formatRupiah(activeReceipt.total)}
+                      </div>
+                      <div className="text-[11px] text-zinc-500 mt-0.5">{activeReceipt.date}</div>
+                    </div>
+
+                    {activeReceipt.tokenNumber && (
+                      <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-center">
+                        <div className="text-[10px] font-medium text-red-700 uppercase tracking-wider">
+                          Stroom / 20-Digit Token PLN
+                        </div>
+                        <div className="font-mono font-bold text-base text-red-900 tracking-widest mt-1 select-all">
+                          {activeReceipt.tokenNumber}
+                        </div>
+                        <div className="text-[9px] text-red-600 mt-0.5">
+                          Masukkan kode token ini ke kWh Meteran Anda
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">No. Referensi</span>
+                        <span className="font-mono text-zinc-800">{activeReceipt.refNumber}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">Nama Pelanggan</span>
+                        <span className="font-medium text-zinc-800">{activeReceipt.customerName || "Abel Thareq"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">Nomor Tujuan / ID</span>
+                        <span className="font-mono text-zinc-800">{activeReceipt.targetNumber}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">Layanan</span>
+                        <span className="text-zinc-800">{activeReceipt.title}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">Metode Bayar</span>
+                        <span className="text-zinc-800">Saldo Merah Putih Pay</span>
+                      </div>
+                      <div className="pt-2 border-t border-dashed border-zinc-200 flex justify-between">
+                        <span className="text-zinc-500">Harga Produk</span>
+                        <span className="text-zinc-800 font-mono">{formatRupiah(activeReceipt.amount)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">Biaya Admin</span>
+                        <span className="text-zinc-800 font-mono">{formatRupiah(activeReceipt.adminFee)}</span>
+                      </div>
+                      <div className="pt-2 border-t border-zinc-200 flex justify-between font-bold text-sm">
+                        <span className="text-zinc-900">Total Pembayaran</span>
+                        <span className="text-[#ED1C24] font-mono">{formatRupiah(activeReceipt.total)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-2.5 pb-2">
+                    <button
+                      onClick={() => alert("Struk berhasil disimpan ke galeri!")}
+                      className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-zinc-300 text-xs font-medium text-zinc-700 hover:bg-zinc-100 cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Simpan Struk
+                    </button>
+                    <button
+                      onClick={handleResetToHome}
+                      className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#ED1C24] text-xs font-medium text-white hover:bg-[#D3151D] cursor-pointer shadow-sm"
+                    >
+                      Selesai
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -2048,33 +2051,45 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 15. FLOW: SHOP DETAIL (DetailShopPage) */}
+            {/* 15. FLOW: SHOP DETAIL (DetailShopPage - Authentic Full-Screen Red Header) */}
             {currentFlow === "shop_detail" && selectedShopProduct && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for DetailShopPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Flutter Authentic Curved Red Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Detail Produk</span>
-                  <div className="flex items-center gap-1">
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Detail Produk
+                    </span>
+                  </div>
+                  <div className="absolute top-8 right-2.5 flex items-center gap-1 z-10">
                     <button
-                      className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-700 transition cursor-pointer"
+                      onClick={() => alert("Tautan produk disalin ke clipboard!")}
+                      className="p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer"
                       aria-label="Bagikan"
                     >
-                      <Share2 className="w-4 h-4" />
+                      <Share2 className="w-4 h-4 text-white" />
                     </button>
                     <button
                       onClick={handleBack}
-                      className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-700 transition cursor-pointer relative"
+                      className="p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer relative"
                       aria-label="Keranjang"
                     >
-                      <ShoppingCart className="w-4 h-4" />
-                      <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-[#ED1C24] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                      <ShoppingCart className="w-4 h-4 text-white" />
+                      <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-white text-[#ED1C24] text-[9px] font-bold rounded-full flex items-center justify-center">
                         1
                       </span>
                     </button>
@@ -2186,20 +2201,30 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 16. FLOW: SHOP CHECKOUT (CheckoutPage) */}
+            {/* 16. FLOW: SHOP CHECKOUT (CheckoutPage - Authentic Full-Screen Red Header) */}
             {currentFlow === "shop_checkout" && selectedShopProduct && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for CheckoutPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Native Authentic Curved Red Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Checkout Pesanan</span>
-                  <div className="w-8" />
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Checkout Pesanan
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 space-y-3.5">
@@ -2363,20 +2388,30 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 18. FLOW: CHANGE PIN (ChangePINPage) */}
+            {/* 18. FLOW: CHANGE PIN (ChangePINPage - Authentic Red Header) */}
             {currentFlow === "change_pin" && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for ChangePINPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Flutter Authentic Red Curved Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Pengaturan PIN Keamanan</span>
-                  <div className="w-8" />
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Pengaturan PIN Keamanan
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 space-y-4">
@@ -2466,20 +2501,30 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 19. FLOW: MY DEVICES (MyDevicesPage) */}
+            {/* 19. FLOW: MY DEVICES (MyDevicesPage - Authentic Red Header) */}
             {currentFlow === "my_devices" && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for MyDevicesPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Flutter Authentic Red Curved Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Perangkat Terhubung</span>
-                  <div className="w-8" />
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Perangkat Terhubung
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 space-y-3">
@@ -2555,20 +2600,30 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 20. FLOW: PENGATURAN STRUK (PengaturanStrukPage) */}
+            {/* 20. FLOW: PENGATURAN STRUK (PengaturanStrukPage - Authentic Red Header) */}
             {currentFlow === "pengaturan_struk" && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for PengaturanStrukPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Flutter Authentic Red Curved Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Pengaturan Format Struk</span>
-                  <div className="w-8" />
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Pengaturan Format Struk
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 space-y-3.5">
@@ -2674,20 +2729,30 @@ export const PpobLiveSimulator: React.FC = () => {
               </div>
             )}
 
-            {/* 21. FLOW: HELP CENTER (PilihPusatBantuanPage) */}
+            {/* 21. FLOW: HELP CENTER (PilihPusatBantuanPage - Authentic Red Header) */}
             {currentFlow === "help_center" && (
-              <div className="min-h-full bg-white flex flex-col pb-20">
-                {/* Native Authentic AppBar for HelpCenterPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
+              <div className="min-h-full bg-white flex flex-col pb-4">
+                {/* Flutter Authentic Red Curved Header */}
+                <div className="relative h-[88px] w-full bg-[#ED1C24] overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/assets/ppob/icons/backgroundtop.svg"
+                    alt="Header Background"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <button
                     onClick={handleBack}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                     aria-label="Kembali"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <span className="text-sm font-bold text-zinc-900">Pusat Bantuan 24/7</span>
-                  <div className="w-8" />
+                  <div className="absolute inset-x-0 top-8 flex items-center justify-center pointer-events-none z-10">
+                    <span className="text-sm font-bold text-white tracking-wide">
+                      Pusat Bantuan 24/7
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-4 space-y-4">
@@ -3542,7 +3607,7 @@ export const PpobLiveSimulator: React.FC = () => {
                 {[
                   { icon: "/assets/ppob/images/navbar_shop.png", tab: 0 },
                   { icon: "/assets/ppob/images/navbar_mutasi.png", tab: 1 },
-                  { icon: "/assets/ppob/images/navbar_homepage.png", tab: 2 },
+                  { icon: "/assets/ppob/images/navbar_home.png", tab: 2 },
                   { icon: "/assets/ppob/images/navbar_komunitas.png", tab: 3 },
                   { icon: "/assets/ppob/images/navbar_akun.png", tab: 4 },
                 ].map((item) => {
@@ -3570,7 +3635,7 @@ export const PpobLiveSimulator: React.FC = () => {
                           alt="Inactive Tab"
                           width={26}
                           height={26}
-                          className="object-contain opacity-40 grayscale hover:opacity-60 transition-opacity"
+                          className="object-contain opacity-70 hover:opacity-100 transition-opacity"
                         />
                       )}
                     </button>

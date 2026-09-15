@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -39,6 +39,8 @@ import {
   Check,
   Share2,
   ShoppingCart,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
 
 // ================= TYPES & DATA =================
@@ -469,6 +471,19 @@ export const PpobLiveSimulator: React.FC = () => {
   const [isMasterMode, setIsMasterMode] = useState<boolean>(false);
   const [komisiClaimed, setKomisiClaimed] = useState<boolean>(false);
 
+  // Fullscreen Device Simulator Mode Toggle
+  const [isFullscreenMode, setIsFullscreenMode] = useState<boolean>(false);
+
+  // Scroll Container Ref for smooth tab resets
+  const mainScrollRef = useRef<HTMLDivElement>(null);
+
+  // Automatically reset scroll position when switching tabs or flow screens
+  useEffect(() => {
+    if (mainScrollRef.current) {
+      mainScrollRef.current.scrollTop = 0;
+    }
+  }, [activeTab, currentFlow]);
+
   // Dynamic Status Bar Color & Frosted Glass adaptiveness
   const isWhiteTop = useMemo(() => {
     if (
@@ -483,7 +498,7 @@ export const PpobLiveSimulator: React.FC = () => {
       return true;
     }
     if (currentFlow === "home") {
-      return activeTab === 0 || activeTab === 4;
+      return activeTab === 0 || activeTab === 1 || activeTab === 4;
     }
     return false;
   }, [currentFlow, activeTab]);
@@ -680,46 +695,85 @@ export const PpobLiveSimulator: React.FC = () => {
   }, [searchQuery, allServices]);
 
   return (
-    <div className="flex flex-col items-center select-none font-sans">
-      {/* Phone Hardware Shell */}
-      <div className="relative w-[360px] sm:w-[385px] h-[730px] sm:h-[760px] bg-black rounded-[48px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.1),0_0_0_8px_#27272A] border-[4px] border-zinc-700/80 flex flex-col overflow-hidden">
-        {/* Dynamic Island Speaker */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-50 flex items-center justify-between px-2.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#1C1C1E] flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]/60 animate-pulse" />
-          </div>
-          <div className="w-2.5 h-2.5 rounded-full bg-[#1C1C1E]" />
+    <div className="flex flex-col items-center select-none font-sans w-full">
+      {/* Simulator Control Bar */}
+      <div className="flex items-center justify-between w-full max-w-[360px] sm:max-w-[385px] mb-3 px-2">
+        <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400 font-medium">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Interactive Live Demo</span>
         </div>
+        <button
+          type="button"
+          onClick={() => setIsFullscreenMode(!isFullscreenMode)}
+          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium transition cursor-pointer"
+        >
+          {isFullscreenMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+          <span>{isFullscreenMode ? "Tutup Layar Penuh" : "Mode Layar Penuh"}</span>
+        </button>
+      </div>
 
-        {/* Inner Phone Screen */}
-        <div className="relative w-full h-full bg-[#F8F8FF] rounded-[38px] overflow-hidden no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          {/* Status Bar with Authentic Frosted Backdrop Blur */}
-          <div
-            className={`absolute top-0 left-0 right-0 h-9 pt-1 px-6 flex items-center justify-between text-[11px] font-semibold z-40 pointer-events-none transition-colors duration-200 backdrop-blur-md ${
-              isWhiteTop
-                ? "bg-white/75 text-zinc-800 border-b border-black/[0.04]"
-                : "bg-[#ED1C24]/85 text-white"
-            }`}
-          >
-            <span>09:41</span>
-            <div className="flex items-center gap-1.5 opacity-90">
-              <span className="text-[10px] font-mono">5G</span>
-              <div
-                className={`w-4 h-2 border rounded-[2px] p-[1px] flex items-center ${
-                  isWhiteTop ? "border-zinc-800" : "border-white"
-                }`}
-              >
+      {/* Phone Mockup Shell (Centered or Fullscreen Modal) */}
+      <div
+        className={
+          isFullscreenMode
+            ? "fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-2 sm:p-6 overflow-y-auto"
+            : "relative flex flex-col items-center"
+        }
+      >
+        {isFullscreenMode && (
+          <div className="w-full max-w-[420px] flex justify-end mb-2 px-2">
+            <button
+              onClick={() => setIsFullscreenMode(false)}
+              className="flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium cursor-pointer transition"
+            >
+              <X className="w-4 h-4" />
+              <span>Tutup Layar Penuh</span>
+            </button>
+          </div>
+        )}
+
+        {/* Phone Hardware Shell */}
+        <div className="relative w-[360px] sm:w-[385px] h-[730px] sm:h-[760px] bg-black rounded-[48px] p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.1),0_0_0_8px_#27272A] border-[4px] border-zinc-700/80 flex flex-col overflow-hidden">
+          {/* Dynamic Island Speaker */}
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-50 flex items-center justify-between px-2.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#1C1C1E] flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]/60 animate-pulse" />
+            </div>
+            <div className="w-2.5 h-2.5 rounded-full bg-[#1C1C1E]" />
+          </div>
+
+          {/* Inner Phone Screen */}
+          <div className="relative w-full h-full bg-[#F8F8FF] rounded-[38px] overflow-hidden no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {/* Status Bar with Authentic Integration */}
+            <div
+              className={`absolute top-0 left-0 right-0 h-9 pt-1 px-6 flex items-center justify-between text-[11px] font-semibold z-40 pointer-events-none transition-colors duration-200 ${
+                isWhiteTop
+                  ? "bg-white/85 text-zinc-800 border-b border-black/[0.04] backdrop-blur-md"
+                  : "bg-transparent text-white"
+              }`}
+            >
+              <span>09:41</span>
+              <div className="flex items-center gap-1.5 opacity-90">
+                <span className="text-[10px] font-mono">5G</span>
                 <div
-                  className={`w-full h-full rounded-[1px] ${
-                    isWhiteTop ? "bg-zinc-800" : "bg-white"
+                  className={`w-4 h-2 border rounded-[2px] p-[1px] flex items-center ${
+                    isWhiteTop ? "border-zinc-800" : "border-white"
                   }`}
-                />
+                >
+                  <div
+                    className={`w-full h-full rounded-[1px] ${
+                      isWhiteTop ? "bg-zinc-800" : "bg-white"
+                    }`}
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* ================= FLOW SCREENS SWITCHER ================= */}
-          <div className="w-full h-full overflow-y-auto relative pb-20 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {/* ================= FLOW SCREENS SWITCHER ================= */}
+            <div
+              ref={mainScrollRef}
+              className="w-full h-full overflow-y-auto relative pb-20 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            >
             {/* 1. FLOW: RECEIPT (Struk Transaksi) */}
             {currentFlow === "receipt" && activeReceipt && (
               <div className="p-4 pt-11 min-h-full bg-zinc-50 flex flex-col">
@@ -2724,7 +2778,7 @@ export const PpobLiveSimulator: React.FC = () => {
                 {activeTab === 2 && (
                   <div className="space-y-3">
                     {/* Flutter AppHeader with backgroundtop.svg */}
-                    <div className="relative h-[80px] w-full overflow-hidden">
+                    <div className="sticky top-0 z-30 h-[80px] w-full overflow-hidden bg-[#ED1C24] shadow-xs">
                       <Image
                         src="/assets/ppob/icons/backgroundtop.svg"
                         alt="Curved App Header"
@@ -3116,29 +3170,31 @@ export const PpobLiveSimulator: React.FC = () => {
                 {/* TAB 3: AGEN CENTER (AgentCenterPage - 100% Authentic to Flutter repo) */}
                 {activeTab === 3 && (
                   <div className="pb-8 space-y-4">
-                    {/* AppHeader with red wave background */}
-                    <div className="relative h-[115px] w-full bg-[#ED1C24] overflow-hidden flex flex-col justify-center items-center pt-5">
-                      <Image
-                        src="/assets/ppob/icons/backgroundtop.svg"
-                        alt="Header Background"
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-                      <span className="relative z-10 text-sm font-bold text-white tracking-wide">
-                        Merah Putih Pay
-                      </span>
-                    </div>
+                    {/* Fixed/Sticky AppHeader with red wave background */}
+                    <div className="sticky top-0 z-30">
+                      <div className="relative h-[115px] w-full bg-[#ED1C24] overflow-hidden flex flex-col justify-center items-center pt-5 shadow-xs">
+                        <Image
+                          src="/assets/ppob/icons/backgroundtop.svg"
+                          alt="Header Background"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                        <span className="relative z-10 text-[15px] font-bold text-white tracking-wide">
+                          Merah Putih Pay
+                        </span>
+                      </div>
 
-                    {/* Floating Agen Center Pill Card */}
-                    <div className="mx-4 -mt-7 relative z-20">
-                      <div className="bg-white py-3 px-4 rounded-2xl border-2 border-[#E2E0E7] shadow-[0_4px_12px_rgba(0,0,0,0.06)] text-center">
-                        <span className="text-base font-bold text-[#ED1C24]">Agen Center</span>
+                      {/* Floating Agen Center Pill Card (Pinned at top overlapping header) */}
+                      <div className="mx-4 -mt-5 relative z-20">
+                        <div className="bg-white py-2.5 px-4 rounded-2xl border-2 border-[#E2E0E7] shadow-[0_4px_12px_rgba(0,0,0,0.06)] text-center">
+                          <span className="text-base font-bold text-[#ED1C24]">Agen Center</span>
+                        </div>
                       </div>
                     </div>
 
                     {/* Main Content Area */}
-                    <div className="px-4 space-y-3">
+                    <div className="px-4 space-y-3 pt-2">
                       {/* Agent 3D Illustration & Message */}
                       <div className="text-center pt-1 pb-2">
                         <div className="relative w-36 h-36 mx-auto">
@@ -3415,11 +3471,11 @@ export const PpobLiveSimulator: React.FC = () => {
                     <button
                       key={item.tab}
                       onClick={() => setActiveTab(item.tab as TabIndex)}
-                      className="relative w-12 h-full flex items-center justify-center cursor-pointer"
+                      className="relative w-12 h-full flex items-center justify-center cursor-pointer outline-none focus:outline-none focus-visible:outline-none select-none"
                     >
                       {isSelected ? (
                         /* Floating Highlight Circle matching Flutter CustomNavBar (gradient #F57478 to #F03E45, top -20) */
-                        <div className="absolute -top-4 w-14 h-14 rounded-full bg-gradient-to-br from-[#F57478] to-[#F03E45] shadow-[0_4px_12px_rgba(240,62,69,0.4)] flex items-center justify-center">
+                        <div className="absolute -top-4 w-14 h-14 rounded-full bg-gradient-to-br from-[#F57478] to-[#F03E45] shadow-[0_4px_12px_rgba(240,62,69,0.4)] flex items-center justify-center pointer-events-none">
                           <Image
                             src={item.icon}
                             alt="Active Tab"
@@ -3448,6 +3504,7 @@ export const PpobLiveSimulator: React.FC = () => {
           <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-zinc-400 rounded-full z-50 pointer-events-none" />
         </div>
       </div>
+    </div>
 
       {/* ================= MODALS ================= */}
 

@@ -497,11 +497,9 @@ export const PpobLiveSimulator: React.FC = () => {
     ) {
       return true;
     }
-    if (currentFlow === "home") {
-      return activeTab === 0 || activeTab === 1 || activeTab === 4;
-    }
+    // All 5 main tabs (Shop, Mutasi, Home, Agen Center, Akun) have signature red headers
     return false;
-  }, [currentFlow, activeTab]);
+  }, [currentFlow]);
 
   const openShopProductDetail = (prod: (typeof SHOP_PRODUCTS)[0]) => {
     setSelectedShopProduct(prod);
@@ -3025,21 +3023,42 @@ export const PpobLiveSimulator: React.FC = () => {
                   </div>
                 )}
 
-                {/* TAB 1: MUTASI / RIWAYAT */}
+                {/* TAB 1: MUTASI / RIWAYAT (100% Flutter Parity with AppHeader) */}
                 {activeTab === 1 && (
-                  <div className="p-4 pt-11 space-y-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-bold text-zinc-900 text-sm">Riwayat Transaksi</h3>
-                      <button
-                        onClick={() => setTransactions(INITIAL_TRANSACTIONS)}
-                        className="text-[10px] font-medium text-[#ED1C24] flex items-center gap-1 cursor-pointer"
-                      >
-                        <RefreshCw className="w-3 h-3" />
-                        <span>Reset Data</span>
-                      </button>
+                  <div className="pb-8 space-y-4">
+                    {/* Fixed/Sticky AppHeader with red wave background */}
+                    <div className="sticky top-0 z-30">
+                      <div className="relative h-[115px] w-full bg-[#ED1C24] overflow-hidden flex flex-col justify-center items-center pt-5 shadow-xs">
+                        <Image
+                          src="/assets/ppob/icons/backgroundtop.svg"
+                          alt="Header Background"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                        <span className="relative z-10 text-[15px] font-bold text-white tracking-wide">
+                          Merah Putih Pay
+                        </span>
+                      </div>
+
+                      {/* Floating Mutasi Transaksi Pill Card matching Flutter mutasitransaksi_page.dart */}
+                      <div className="mx-4 -mt-5 relative z-20">
+                        <div className="bg-white py-2.5 px-4 rounded-2xl border-2 border-[#E2E0E7] shadow-[0_4px_12px_rgba(0,0,0,0.06)] text-center flex items-center justify-between">
+                          <div className="w-6" />
+                          <span className="text-base font-bold text-[#ED1C24]">Mutasi Transaksi</span>
+                          <button
+                            onClick={() => setTransactions(INITIAL_TRANSACTIONS)}
+                            className="p-1 rounded-full text-zinc-400 hover:text-[#ED1C24] transition cursor-pointer"
+                            title="Reset Data Transaksi"
+                          >
+                            <RefreshCw className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
+                    {/* Transaction List */}
+                    <div className="px-4 space-y-2 pt-2">
                       {transactions.map((tx) => (
                         <div
                           key={tx.id}
@@ -3074,49 +3093,89 @@ export const PpobLiveSimulator: React.FC = () => {
                   </div>
                 )}
 
-                {/* TAB 0: SHOP (Aksesoris & Gadget PPOB) */}
+                {/* TAB 0: SHOP (Aksesoris & Gadget PPOB - 100% Flutter Parity) */}
                 {activeTab === 0 && (
-                  <div className="p-4 pt-11 space-y-3 pb-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-bold text-zinc-900 text-sm">Shop Peralatan Loket PPOB</h3>
-                        <p className="text-[10px] text-zinc-400">Peralatan resmi mitra loket kasir & aksesoris</p>
+                  <div className="pb-8 space-y-3">
+                    {/* Fixed/Sticky Red Header matching Flutter ShopPage SafeArea */}
+                    <div className="sticky top-0 z-30 bg-[#ED1C24] shadow-xs">
+                      {/* Top Bar: Search Input + Cart Icon with badge */}
+                      <div className="pt-8 px-4 pb-2.5 flex items-center gap-2.5">
+                        <div className="flex-1 relative">
+                          <input
+                            type="text"
+                            placeholder="Cari Produk..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-9 pr-4 py-2 bg-white rounded-full text-xs text-zinc-900 placeholder-zinc-400 shadow-xs focus:outline-none"
+                          />
+                          <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        </div>
+                        <button
+                          onClick={() => alert("Keranjang belanja siap untuk checkout!")}
+                          className="w-9 h-9 rounded-full bg-white text-[#ED1C24] flex items-center justify-center shadow-xs hover:bg-zinc-100 transition cursor-pointer relative shrink-0"
+                          title="Keranjang"
+                        >
+                          <ShoppingCart className="w-4 h-4 text-[#ED1C24]" />
+                          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-white border border-[#ED1C24] text-[#ED1C24] text-[9px] font-bold flex items-center justify-center">
+                            1
+                          </span>
+                        </button>
                       </div>
-                      <button
-                        onClick={() => alert("Keranjang belanja kosong. Silakan pilih produk!")}
-                        className="p-2 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 relative cursor-pointer"
-                      >
-                        <ShoppingBag className="w-4 h-4" />
-                      </button>
+
+                      {/* Promo Cards Carousel matching Flutter ShopPage lines 388-430 */}
+                      <div className="px-4 pb-3">
+                        <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+                          <div className="min-w-[210px] rounded-xl bg-white p-2.5 shadow-xs flex items-center gap-2.5">
+                            <div className="w-9 h-9 rounded-lg bg-red-50 text-[#ED1C24] flex items-center justify-center shrink-0">
+                              <ShoppingBag className="w-4 h-4 text-[#ED1C24]" />
+                            </div>
+                            <div>
+                              <div className="text-[11px] font-bold text-zinc-900">Diskon 50% Gadget Loket</div>
+                              <div className="text-[9px] text-zinc-500">Keyboard & mouse kasir</div>
+                            </div>
+                          </div>
+                          <div className="min-w-[210px] rounded-xl bg-white p-2.5 shadow-xs flex items-center gap-2.5">
+                            <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                              <Truck className="w-4 h-4 text-emerald-600" />
+                            </div>
+                            <div>
+                              <div className="text-[11px] font-bold text-zinc-900">Gratis Ongkir Se-Indonesia</div>
+                              <div className="text-[9px] text-zinc-500">Min. belanja Rp 100.000</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Filter Kategori Chips */}
-                    <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-                      {["Semua", "Elektronik", "Office & Stationery"].map((cat) => (
-                        <button
-                          key={cat}
-                          onClick={() => setShopCategory(cat)}
-                          className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
-                            shopCategory === cat
-                              ? "bg-[#ED1C24] text-white shadow-xs"
-                              : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300"
-                          }`}
-                        >
-                          {cat}
-                        </button>
-                      ))}
+                    <div className="px-4 pt-1">
+                      <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+                        {["Semua", "Elektronik", "Office & Stationery"].map((cat) => (
+                          <button
+                            key={cat}
+                            onClick={() => setShopCategory(cat)}
+                            className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                              shopCategory === cat
+                                ? "bg-[#ED1C24] text-white shadow-xs"
+                                : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300"
+                            }`}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Toast Notification */}
                     {cartToast && (
-                      <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-[11px] text-emerald-800 flex items-center gap-2">
+                      <div className="mx-4 p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-[11px] text-emerald-800 flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>{cartToast}</span>
                       </div>
                     )}
 
                     {/* 2-Column Product Grid */}
-                    <div className="grid grid-cols-2 gap-2.5">
+                    <div className="px-4 grid grid-cols-2 gap-2.5">
                       {SHOP_PRODUCTS.filter(
                         (p) => shopCategory === "Semua" || p.category === shopCategory
                       ).map((prod) => (
@@ -3394,55 +3453,76 @@ export const PpobLiveSimulator: React.FC = () => {
                   </div>
                 )}
 
-                {/* TAB 4: AKUN / PROFIL */}
+                {/* TAB 4: AKUN / PROFIL (100% Flutter Parity with AppHeader) */}
                 {activeTab === 4 && (
-                  <div className="p-4 pt-11 space-y-3 pb-6">
-                    <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-red-100 text-[#ED1C24] flex items-center justify-center font-bold text-sm">
-                        AT
+                  <div className="pb-8 space-y-4">
+                    {/* Fixed/Sticky AppHeader with red wave background */}
+                    <div className="sticky top-0 z-30">
+                      <div className="relative h-[115px] w-full bg-[#ED1C24] overflow-hidden flex flex-col justify-center items-center pt-5 shadow-xs">
+                        <Image
+                          src="/assets/ppob/icons/backgroundtop.svg"
+                          alt="Header Background"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                        <span className="relative z-10 text-[15px] font-bold text-white tracking-wide">
+                          Merah Putih Pay
+                        </span>
                       </div>
-                      <div>
-                        <div className="font-bold text-zinc-900 text-sm flex items-center gap-1.5">
-                          <span>Abel Thareq</span>
-                          <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-mono font-semibold">
-                            VERIFIED KYC
-                          </span>
+
+                      {/* Floating Profile Card matching Flutter account_page.dart */}
+                      <div className="mx-4 -mt-5 relative z-20">
+                        <div className="bg-white p-3.5 rounded-2xl border-2 border-[#E2E0E7] shadow-[0_4px_12px_rgba(0,0,0,0.06)] flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-red-100 text-[#ED1C24] flex items-center justify-center font-bold text-sm shrink-0">
+                            AT
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold text-zinc-900 text-sm flex items-center gap-1.5">
+                              <span className="truncate">Abel Thareq</span>
+                              <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-mono font-semibold shrink-0">
+                                VERIFIED KYC
+                              </span>
+                            </div>
+                            <div className="text-xs text-zinc-500 font-mono mt-0.5">+62 812-3456-7890</div>
+                            <div className="text-[10px] text-zinc-400 truncate">abel.thareq88@gmail.com</div>
+                          </div>
                         </div>
-                        <div className="text-xs text-zinc-500 font-mono">+62 812-3456-7890</div>
-                        <div className="text-[10px] text-zinc-400">abel.thareq88@gmail.com</div>
                       </div>
                     </div>
 
-                    <div className="bg-white rounded-2xl border border-zinc-200 overflow-hidden text-xs">
-                      <div className="p-3 bg-zinc-50/80 border-b border-zinc-100 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
-                        Pengaturan Akun & Keamanan
-                      </div>
-                      {[
-                        { label: "Pengaturan Keamanan & PIN", desc: "Ubah 6-digit PIN otorisasi", icon: KeyRound, onClick: () => navigateTo("change_pin") },
-                        { label: "Kelola Perangkat Saya", desc: "Lihat 3 perangkat aktif", icon: Smartphone, onClick: () => navigateTo("my_devices") },
-                        { label: "Pengaturan Format Struk", desc: "Nama loket & ukuran thermal", icon: Printer, onClick: () => navigateTo("pengaturan_struk") },
-                        { label: "Pusat Bantuan & Layanan CS", desc: "FAQ & WhatsApp 24 jam", icon: HelpCircle, onClick: () => navigateTo("help_center") },
-                        { label: "Riwayat Transaksi Lengkap", desc: "Lihat semua mutasi saldo", icon: History, onClick: () => setActiveTab(1) },
-                      ].map((item, idx) => (
-                        <div
-                          key={item.label}
-                          onClick={item.onClick}
-                          className={`p-3.5 flex items-center justify-between hover:bg-zinc-50 transition-colors cursor-pointer ${
-                            idx > 0 ? "border-t border-zinc-100" : ""
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-red-50 text-[#ED1C24] flex items-center justify-center">
-                              <item.icon className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <div className="font-semibold text-zinc-800">{item.label}</div>
-                              <div className="text-[10px] text-zinc-400">{item.desc}</div>
-                            </div>
-                          </div>
-                          <ChevronRight className="w-4 h-4 text-zinc-400" />
+                    <div className="px-4 pt-2">
+                      <div className="bg-white rounded-2xl border border-zinc-200 overflow-hidden text-xs">
+                        <div className="p-3 bg-zinc-50/80 border-b border-zinc-100 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                          Pengaturan Akun & Keamanan
                         </div>
-                      ))}
+                        {[
+                          { label: "Pengaturan Keamanan & PIN", desc: "Ubah 6-digit PIN otorisasi", icon: KeyRound, onClick: () => navigateTo("change_pin") },
+                          { label: "Kelola Perangkat Saya", desc: "Lihat 3 perangkat aktif", icon: Smartphone, onClick: () => navigateTo("my_devices") },
+                          { label: "Pengaturan Format Struk", desc: "Nama loket & ukuran thermal", icon: Printer, onClick: () => navigateTo("pengaturan_struk") },
+                          { label: "Pusat Bantuan & Layanan CS", desc: "FAQ & WhatsApp 24 jam", icon: HelpCircle, onClick: () => navigateTo("help_center") },
+                          { label: "Riwayat Transaksi Lengkap", desc: "Lihat semua mutasi saldo", icon: History, onClick: () => setActiveTab(1) },
+                        ].map((item, idx) => (
+                          <div
+                            key={item.label}
+                            onClick={item.onClick}
+                            className={`p-3.5 flex items-center justify-between hover:bg-zinc-50 transition-colors cursor-pointer ${
+                              idx > 0 ? "border-t border-zinc-100" : ""
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-red-50 text-[#ED1C24] flex items-center justify-center">
+                                <item.icon className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-zinc-800">{item.label}</div>
+                                <div className="text-[10px] text-zinc-400">{item.desc}</div>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-zinc-400" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

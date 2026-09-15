@@ -460,6 +460,34 @@ export const PpobLiveSimulator: React.FC = () => {
   // FAQ Accordion State
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
+  // Agen Center (Tab 3) State matching Flutter agent_center_page.dart
+  const [expandedAgentFaq, setExpandedAgentFaq] = useState<Record<string, boolean>>({
+    "Apa itu Agen Center?": true,
+    "Apa Kelebihan menjadi Master?": false,
+    "Bagaimana Cara menjadi Master?": false,
+  });
+  const [isMasterMode, setIsMasterMode] = useState<boolean>(false);
+  const [komisiClaimed, setKomisiClaimed] = useState<boolean>(false);
+
+  // Dynamic Status Bar Color & Frosted Glass adaptiveness
+  const isWhiteTop = useMemo(() => {
+    if (
+      currentFlow === "shop_detail" ||
+      currentFlow === "shop_checkout" ||
+      currentFlow === "change_pin" ||
+      currentFlow === "my_devices" ||
+      currentFlow === "pengaturan_struk" ||
+      currentFlow === "help_center" ||
+      currentFlow === "receipt"
+    ) {
+      return true;
+    }
+    if (currentFlow === "home") {
+      return activeTab === 0 || activeTab === 4;
+    }
+    return false;
+  }, [currentFlow, activeTab]);
+
   const openShopProductDetail = (prod: (typeof SHOP_PRODUCTS)[0]) => {
     setSelectedShopProduct(prod);
     setShopQty(1);
@@ -664,23 +692,37 @@ export const PpobLiveSimulator: React.FC = () => {
         </div>
 
         {/* Inner Phone Screen */}
-        <div className="relative w-full h-full bg-[#F8F8FF] rounded-[38px] overflow-hidden flex flex-col no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          {/* Status Bar */}
-          <div className="h-8 pt-1.5 px-6 flex items-center justify-between text-white text-[11px] font-medium z-40 bg-[#ED1C24]">
+        <div className="relative w-full h-full bg-[#F8F8FF] rounded-[38px] overflow-hidden no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {/* Status Bar with Authentic Frosted Backdrop Blur */}
+          <div
+            className={`absolute top-0 left-0 right-0 h-9 pt-1 px-6 flex items-center justify-between text-[11px] font-semibold z-40 pointer-events-none transition-colors duration-200 backdrop-blur-md ${
+              isWhiteTop
+                ? "bg-white/75 text-zinc-800 border-b border-black/[0.04]"
+                : "bg-[#ED1C24]/85 text-white"
+            }`}
+          >
             <span>09:41</span>
             <div className="flex items-center gap-1.5 opacity-90">
               <span className="text-[10px] font-mono">5G</span>
-              <div className="w-4 h-2 border border-white rounded-[2px] p-[1px] flex items-center">
-                <div className="w-full h-full bg-white rounded-[1px]" />
+              <div
+                className={`w-4 h-2 border rounded-[2px] p-[1px] flex items-center ${
+                  isWhiteTop ? "border-zinc-800" : "border-white"
+                }`}
+              >
+                <div
+                  className={`w-full h-full rounded-[1px] ${
+                    isWhiteTop ? "bg-zinc-800" : "bg-white"
+                  }`}
+                />
               </div>
             </div>
           </div>
 
           {/* ================= FLOW SCREENS SWITCHER ================= */}
-          <div className="flex-1 overflow-y-auto relative pb-20 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="w-full h-full overflow-y-auto relative pb-20 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {/* 1. FLOW: RECEIPT (Struk Transaksi) */}
             {currentFlow === "receipt" && activeReceipt && (
-              <div className="p-4 min-h-full bg-zinc-50 flex flex-col">
+              <div className="p-4 pt-11 min-h-full bg-zinc-50 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <button
                     onClick={handleResetToHome}
@@ -778,7 +820,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "tagihan" && (
               <div className="min-h-full bg-white flex flex-col">
                 {/* Flutter Authentic Header for TagihanPage */}
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -789,7 +831,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   {/* Back Button */}
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -941,7 +983,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 4. FLOW: TRANSFER BANK (TransferBankPage) */}
             {currentFlow === "transfer" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -951,7 +993,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1045,7 +1087,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 5. FLOW: CASH SERVICE / TARIK TUNAI (TarikTunaiSatuPage) */}
             {currentFlow === "tariktunai" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1055,7 +1097,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1143,7 +1185,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 6. FLOW: E-WALLET (EwalletPage) */}
             {currentFlow === "ewallet" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1153,7 +1195,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1243,7 +1285,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 7. FLOW: E-MONEY (EMoneyPage) */}
             {currentFlow === "emoney" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1253,7 +1295,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1346,7 +1388,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 8. FLOW: PDAM (PdamPage) */}
             {currentFlow === "pdam" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1356,7 +1398,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1437,7 +1479,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 9. FLOW: TOP UP GAME (TopUpGamePage) */}
             {currentFlow === "topupgame" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1447,7 +1489,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1555,7 +1597,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 10. FLOW: E-VOUCHER (VoucherPage) */}
             {currentFlow === "evoucher" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1565,7 +1607,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1610,7 +1652,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 11. FLOW: LAINNYA (LainnyaPage) */}
             {currentFlow === "lainnya" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1620,7 +1662,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1903,7 +1945,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 14. FLOW: by.U PROMO */}
             {currentFlow === "byu" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[76px] w-full">
+                <div className="relative h-[88px] w-full">
                   <Image
                     src="/assets/ppob/icons/backgroundtop.svg"
                     alt="Header Background"
@@ -1913,7 +1955,7 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-8 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -1958,7 +2000,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "shop_detail" && selectedShopProduct && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for DetailShopPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2096,7 +2138,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "shop_checkout" && selectedShopProduct && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for CheckoutPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2273,7 +2315,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "change_pin" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for ChangePINPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2376,7 +2418,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "my_devices" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for MyDevicesPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2465,7 +2507,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "pengaturan_struk" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for PengaturanStrukPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2584,7 +2626,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "help_center" && (
               <div className="min-h-full bg-white flex flex-col pb-20">
                 {/* Native Authentic AppBar for HelpCenterPage */}
-                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 h-12 flex items-center justify-between">
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-zinc-200/80 px-3 pt-8 pb-2.5 h-16 flex items-center justify-between">
                   <button
                     onClick={handleBack}
                     className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-100 text-zinc-800 transition cursor-pointer"
@@ -2682,7 +2724,7 @@ export const PpobLiveSimulator: React.FC = () => {
                 {activeTab === 2 && (
                   <div className="space-y-3">
                     {/* Flutter AppHeader with backgroundtop.svg */}
-                    <div className="relative h-[56px] w-full overflow-hidden">
+                    <div className="relative h-[80px] w-full overflow-hidden">
                       <Image
                         src="/assets/ppob/icons/backgroundtop.svg"
                         alt="Curved App Header"
@@ -2691,7 +2733,7 @@ export const PpobLiveSimulator: React.FC = () => {
                         priority
                       />
                       {/* Topbar Content: Centered Title + Right Action Buttons */}
-                      <div className="absolute inset-0 flex items-center justify-between px-4 pb-0.5 z-10">
+                      <div className="absolute inset-0 flex items-center justify-between px-4 pt-7 pb-0.5 z-10">
                         {/* Left balancing spacer */}
                         <div className="w-12" />
 
@@ -2931,7 +2973,7 @@ export const PpobLiveSimulator: React.FC = () => {
 
                 {/* TAB 1: MUTASI / RIWAYAT */}
                 {activeTab === 1 && (
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 pt-11 space-y-3">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold text-zinc-900 text-sm">Riwayat Transaksi</h3>
                       <button
@@ -2980,7 +3022,7 @@ export const PpobLiveSimulator: React.FC = () => {
 
                 {/* TAB 0: SHOP (Aksesoris & Gadget PPOB) */}
                 {activeTab === 0 && (
-                  <div className="p-4 space-y-3 pb-6">
+                  <div className="p-4 pt-11 space-y-3 pb-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <h3 className="font-bold text-zinc-900 text-sm">Shop Peralatan Loket PPOB</h3>
@@ -3071,34 +3113,234 @@ export const PpobLiveSimulator: React.FC = () => {
                   </div>
                 )}
 
-                {/* TAB 3: MITRA / KOMUNITAS */}
+                {/* TAB 3: AGEN CENTER (AgentCenterPage - 100% Authentic to Flutter repo) */}
                 {activeTab === 3 && (
-                  <div className="p-4 space-y-3">
-                    <div className="bg-gradient-to-br from-[#ED1C24] to-[#C4121A] text-white p-4 rounded-2xl shadow-sm">
-                      <div className="text-[10px] uppercase font-mono tracking-wider bg-white/20 px-2 py-0.5 rounded-full w-fit">
-                        AGEN RESMI
+                  <div className="pb-8 space-y-4">
+                    {/* AppHeader with red wave background */}
+                    <div className="relative h-[115px] w-full bg-[#ED1C24] overflow-hidden flex flex-col justify-center items-center pt-5">
+                      <Image
+                        src="/assets/ppob/icons/backgroundtop.svg"
+                        alt="Header Background"
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                      <span className="relative z-10 text-sm font-bold text-white tracking-wide">
+                        Merah Putih Pay
+                      </span>
+                    </div>
+
+                    {/* Floating Agen Center Pill Card */}
+                    <div className="mx-4 -mt-7 relative z-20">
+                      <div className="bg-white py-3 px-4 rounded-2xl border-2 border-[#E2E0E7] shadow-[0_4px_12px_rgba(0,0,0,0.06)] text-center">
+                        <span className="text-base font-bold text-[#ED1C24]">Agen Center</span>
                       </div>
-                      <h4 className="text-base font-bold mt-2">Mitra Merah Putih Pay</h4>
-                      <p className="text-[11px] text-white/80 mt-1">
-                        Dapatkan komisi per transaksi mulai dari Rp 1.500 untuk setiap pembayaran loket PPOB.
-                      </p>
-                      <div className="mt-3 grid grid-cols-2 gap-2 text-center text-xs">
-                        <div className="bg-white/10 rounded-xl p-2">
-                          <div className="text-[10px] text-white/70">Total Komisi</div>
-                          <div className="font-bold font-mono">Rp 842.500</div>
+                    </div>
+
+                    {/* Main Content Area */}
+                    <div className="px-4 space-y-3">
+                      {/* Agent 3D Illustration & Message */}
+                      <div className="text-center pt-1 pb-2">
+                        <div className="relative w-36 h-36 mx-auto">
+                          <Image
+                            src="/assets/ppob/images/agent.png"
+                            alt="Agen Center Illustration"
+                            fill
+                            className="object-contain"
+                            priority
+                          />
                         </div>
-                        <div className="bg-white/10 rounded-xl p-2">
-                          <div className="text-[10px] text-white/70">Downline Aktif</div>
-                          <div className="font-bold font-mono">14 Toko</div>
+                        <p className="mt-2 text-xs font-medium text-[#2D2D2D] max-w-xs mx-auto leading-relaxed">
+                          Mohon Maaf, Halaman Agen Center hanya dapat diakses oleh Master
+                        </p>
+                      </div>
+
+                      {/* 3 Expandable Q&A FAQ Cards matching Flutter _buildExpandableCard */}
+                      <div className="space-y-2">
+                        {/* FAQ 1: Apa itu Agen Center? */}
+                        <div className="bg-white rounded-xl border border-zinc-200/80 shadow-xs overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setExpandedAgentFaq((prev) => ({
+                                ...prev,
+                                "Apa itu Agen Center?": !prev["Apa itu Agen Center?"],
+                              }))
+                            }
+                            className="w-full p-3.5 flex items-center justify-between text-left cursor-pointer hover:bg-zinc-50/80 transition-colors"
+                          >
+                            <span className="text-xs font-semibold text-[#2D2D2D]">
+                              Apa itu Agen Center?
+                            </span>
+                            <ChevronRight
+                              className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${
+                                expandedAgentFaq["Apa itu Agen Center?"] ? "rotate-90" : ""
+                              }`}
+                            />
+                          </button>
+                          {expandedAgentFaq["Apa itu Agen Center?"] && (
+                            <div className="px-3.5 pb-3.5 pt-1 text-[11px] text-zinc-500 leading-relaxed border-t border-zinc-100">
+                              Agen Center adalah halaman yang berfungsi sebagai pusat informasi yang memungkinkan master untuk mengelola bisnis secara lebih efisien dengan adanya informasi seperti Total transaksi, Cashback, Profit tertulis, dan lainnya.
+                            </div>
+                          )}
+                        </div>
+
+                        {/* FAQ 2: Apa Kelebihan menjadi Master? */}
+                        <div className="bg-white rounded-xl border border-zinc-200/80 shadow-xs overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setExpandedAgentFaq((prev) => ({
+                                ...prev,
+                                "Apa Kelebihan menjadi Master?": !prev["Apa Kelebihan menjadi Master?"],
+                              }))
+                            }
+                            className="w-full p-3.5 flex items-center justify-between text-left cursor-pointer hover:bg-zinc-50/80 transition-colors"
+                          >
+                            <span className="text-xs font-semibold text-[#2D2D2D]">
+                              Apa Kelebihan menjadi Master?
+                            </span>
+                            <ChevronRight
+                              className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${
+                                expandedAgentFaq["Apa Kelebihan menjadi Master?"] ? "rotate-90" : ""
+                              }`}
+                            />
+                          </button>
+                          {expandedAgentFaq["Apa Kelebihan menjadi Master?"] && (
+                            <div className="px-3.5 pb-3.5 pt-1 text-[11px] text-zinc-500 leading-relaxed border-t border-zinc-100 space-y-1.5">
+                              <p className="font-medium text-zinc-700">Fitur-fitur yang diperbolehkan oleh Master Yaitu:</p>
+                              <div className="space-y-1 pl-1">
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-zinc-400">•</span>
+                                  <span><strong className="text-zinc-700">Fitur Cashback:</strong> Dapat memperoleh cashback dari setiap transaksi sukses</span>
+                                </div>
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-zinc-400">•</span>
+                                  <span><strong className="text-zinc-700">Fitur Referal:</strong> Dapat merekrut Agen secara langsung untuk menjadi downline</span>
+                                </div>
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-zinc-400">•</span>
+                                  <span><strong className="text-zinc-700">Fitur Utang:</strong> Dapat mencatat transaksi yang diutangkan</span>
+                                </div>
+                              </div>
+                              <p className="text-[10px] text-[#ED1C24] font-medium pt-1">
+                                * Cashback diberikan per admin dan setiap harga produk hanya memiliki 1 jenis cashback
+                              </p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* FAQ 3: Bagaimana Cara menjadi Master? */}
+                        <div className="bg-white rounded-xl border border-zinc-200/80 shadow-xs overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setExpandedAgentFaq((prev) => ({
+                                ...prev,
+                                "Bagaimana Cara menjadi Master?": !prev["Bagaimana Cara menjadi Master?"],
+                              }))
+                            }
+                            className="w-full p-3.5 flex items-center justify-between text-left cursor-pointer hover:bg-zinc-50/80 transition-colors"
+                          >
+                            <span className="text-xs font-semibold text-[#2D2D2D]">
+                              Bagaimana Cara menjadi Master?
+                            </span>
+                            <ChevronRight
+                              className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${
+                                expandedAgentFaq["Bagaimana Cara menjadi Master?"] ? "rotate-90" : ""
+                              }`}
+                            />
+                          </button>
+                          {expandedAgentFaq["Bagaimana Cara menjadi Master?"] && (
+                            <div className="px-3.5 pb-3.5 pt-1 text-[11px] text-zinc-500 leading-relaxed border-t border-zinc-100">
+                              Admin berhak untuk mengubah status agen ke Master apabila total transaksi agen selama 30 hari terakhir telah mencapai Rp1.000.000.
+                            </div>
+                          )}
                         </div>
                       </div>
+
+                      {/* Interactive Demo Mode Toggle */}
+                      <div className="pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsMasterMode(!isMasterMode)}
+                          className="w-full py-2.5 px-3 rounded-xl border border-dashed border-red-300 bg-red-50/60 hover:bg-red-50 text-[#ED1C24] text-[11px] font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <KeyRound className="w-3.5 h-3.5" />
+                          <span>{isMasterMode ? "Tutup Mode Master (Kembali ke Info Agen)" : "Simulasi Akses Dashboard Master (Demo)"}</span>
+                        </button>
+                      </div>
+
+                      {/* Master Agent Dashboard (Shown when Demo Mode active) */}
+                      {isMasterMode && (
+                        <div className="bg-gradient-to-br from-[#ED1C24] to-[#C4121A] text-white p-4 rounded-2xl shadow-sm space-y-3 mt-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] uppercase font-mono tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+                              AKSES MASTER AKTIF
+                            </span>
+                            <span className="text-[10px] text-white/80">ID Master: #MPP-8819</span>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2 text-center text-xs">
+                            <div className="bg-white/10 rounded-xl p-2.5">
+                              <div className="text-[10px] text-white/70">Saldo Komisi</div>
+                              <div className="font-bold font-mono text-sm mt-0.5">
+                                {komisiClaimed ? "Rp 0" : "Rp 842.500"}
+                              </div>
+                            </div>
+                            <div className="bg-white/10 rounded-xl p-2.5">
+                              <div className="text-[10px] text-white/70">Downline Aktif</div>
+                              <div className="font-bold font-mono text-sm mt-0.5">14 Toko</div>
+                            </div>
+                          </div>
+
+                          {!komisiClaimed ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSaldo((prev) => prev + 842500);
+                                setKomisiClaimed(true);
+                              }}
+                              className="w-full py-2 rounded-xl bg-white text-[#ED1C24] text-xs font-bold hover:bg-zinc-100 transition cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>Cairkan Komisi ke Saldo Utama (+Rp 842.500)</span>
+                            </button>
+                          ) : (
+                            <div className="py-2 px-3 rounded-xl bg-emerald-500/20 text-emerald-200 text-[11px] font-medium text-center flex items-center justify-center gap-1.5">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                              <span>Komisi Rp 842.500 berhasil ditambahkan ke saldo!</span>
+                            </div>
+                          )}
+
+                          <div className="pt-2 border-t border-white/20 text-[10px] text-white/80 space-y-1">
+                            <div className="font-semibold text-white">4 Downline Teratas:</div>
+                            <div className="flex justify-between">
+                              <span>Toko Berkah Cell (Tasikmalaya)</span>
+                              <span className="font-mono">+Rp 320.000</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Loket Sentosa Jaya (Bandung)</span>
+                              <span className="font-mono">+Rp 245.000</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Agen Barokah PPOB (Ciamis)</span>
+                              <span className="font-mono">+Rp 182.500</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Abel Cell 2 (Garut)</span>
+                              <span className="font-mono">+Rp 95.000</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
 
                 {/* TAB 4: AKUN / PROFIL */}
                 {activeTab === 4 && (
-                  <div className="p-4 space-y-3 pb-6">
+                  <div className="p-4 pt-11 space-y-3 pb-6">
                     <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-xs flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-red-100 text-[#ED1C24] flex items-center justify-center font-bold text-sm">
                         AT

@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle2, ShieldCheck, Layers, Terminal } from "lucide-react";
+import { X, CheckCircle2, ShieldCheck, Layers, Terminal, ArrowUpRight } from "lucide-react";
 import { Project } from "@/data/portfolioData";
 
 interface ProjectModalProps {
@@ -176,13 +177,18 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
 
           {/* 3. PINNED FOOTER */}
-          <div className="p-4 px-6 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/90 dark:bg-[#151518] flex items-center justify-between flex-shrink-0 z-20">
-            <span className="text-xs text-zinc-400 font-mono">
-              Press <kbd className="px-1.5 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded text-[10px]">ESC</kbd> or click backdrop to close
-            </span>
+          <div className="p-4 px-6 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/90 dark:bg-[#151518] flex items-center justify-between flex-shrink-0 z-20 gap-3">
+            <Link
+              href={`/projects/${project.id}`}
+              onClick={onClose}
+              className="text-xs font-semibold text-white bg-maroon-800 dark:bg-maroon-500 hover:bg-maroon-900 px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+            >
+              <span>{project.id === "ppob" ? "Launch Interactive Demo & Case Study" : "View Full Case Study"}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
             <button
               onClick={onClose}
-              className="text-xs font-medium text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg bg-zinc-200/80 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
+              className="text-xs font-medium text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg bg-zinc-200/80 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
             >
               Close Details
             </button>

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Plus, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { projects, Project, personalInfo } from "@/data/portfolioData";
@@ -226,12 +227,12 @@ function ProjectCardComponent({
 }: {
   project: Project;
   isBackground: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   return (
-    <div
-      onClick={onClick}
-      className={`group cursor-pointer rounded-2xl p-6 sm:p-7 transition-all duration-200 flex flex-col justify-between border transform-gpu ${
+    <Link
+      href={`/projects/${project.id}`}
+      className={`group cursor-pointer rounded-2xl p-6 sm:p-7 transition-all duration-200 flex flex-col justify-between border transform-gpu block ${
         isBackground
           ? "bg-zinc-100 dark:bg-[#141417] border-zinc-200/80 dark:border-zinc-800/90 opacity-90 hover:opacity-100 hover:scale-[1.01] shadow-md hover:shadow-xl"
           : "bg-white dark:bg-[#18181C] border-zinc-200/90 dark:border-zinc-700/80 hover:border-zinc-400 dark:hover:border-zinc-500 shadow-[0_8px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.45)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_20px_44px_rgba(0,0,0,0.6)] hover:scale-[1.015]"
@@ -259,13 +260,12 @@ function ProjectCardComponent({
                 IP 2025
               </span>
             )}
-            <button
-              type="button"
+            <span
               className="w-7 h-7 rounded-full bg-zinc-100 dark:bg-zinc-800 group-hover:bg-maroon-800 group-hover:text-white dark:group-hover:bg-maroon-400 dark:group-hover:text-zinc-950 flex items-center justify-center text-zinc-600 dark:text-zinc-300 transition-colors"
               aria-label={`View details of ${project.title}`}
             >
               <Plus className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-200" />
-            </button>
+            </span>
           </div>
         </div>
 
@@ -304,11 +304,11 @@ function ProjectCardComponent({
         </div>
 
         <span className="inline-flex items-center gap-1 text-xs font-medium text-zinc-400 dark:text-zinc-500 group-hover:text-maroon-700 dark:group-hover:text-maroon-400 transition-colors">
-          <RollingText>Details</RollingText>
+          <RollingText>{project.id === "ppob" ? "Live Demo & Case Study" : "Case Study"}</RollingText>
           <ArrowUpRight className="w-3 h-3 text-zinc-400 group-hover:text-maroon-600 dark:group-hover:text-maroon-400 transition-transform duration-500 ease-out group-hover:rotate-[360deg] will-change-transform" />
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
 

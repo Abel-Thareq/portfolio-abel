@@ -450,7 +450,7 @@ export const PpobLiveSimulator: React.FC = () => {
         {/* Inner Phone Screen */}
         <div className="relative w-full h-full bg-[#F8F8FF] rounded-[38px] overflow-hidden flex flex-col no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {/* Status Bar */}
-          <div className="h-9 pt-2 px-6 flex items-center justify-between text-white text-[11px] font-medium z-40 bg-[#ED1C24]">
+          <div className="h-8 pt-1.5 px-6 flex items-center justify-between text-white text-[11px] font-medium z-40 bg-[#ED1C24]">
             <span>09:41</span>
             <div className="flex items-center gap-1.5 opacity-90">
               <span className="text-[10px] font-mono">5G</span>
@@ -562,7 +562,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {currentFlow === "tagihan" && (
               <div className="min-h-full bg-white flex flex-col">
                 {/* Flutter Authentic Header for TagihanPage */}
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -573,19 +573,19 @@ export const PpobLiveSimulator: React.FC = () => {
                   {/* Back Button */}
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
 
                   {/* Floating Box: "Daftar Tagihan & Bayar" */}
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Daftar Tagihan & Bayar</span>
                   </div>
                 </div>
 
                 {/* 22 Menu Items Grid */}
-                <div className="p-4 pt-6 grid grid-cols-4 gap-y-3 gap-x-2">
+                <div className="p-4 pt-5.5 grid grid-cols-4 gap-y-3 gap-x-2">
                   {TAGIHAN_ITEMS.map((item) => (
                     <div
                       key={item.id}
@@ -725,7 +725,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 4. FLOW: TRANSFER BANK (TransferBankPage) */}
             {currentFlow === "transfer" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -735,16 +735,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih Bank Tujuan</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div>
                     <label className="text-xs font-bold text-zinc-800">Bank Tujuan</label>
                     <div className="grid grid-cols-2 gap-2 mt-2">
@@ -829,7 +829,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 5. FLOW: CASH SERVICE / TARIK TUNAI (TarikTunaiSatuPage) */}
             {currentFlow === "tariktunai" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -839,16 +839,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih Jalur Tarik Tunai</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div>
                     <label className="text-xs font-bold text-zinc-800">Merchant / Gerai Penarikan</label>
                     <div className="space-y-2 mt-2">
@@ -927,7 +927,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 6. FLOW: E-WALLET (EwalletPage) */}
             {currentFlow === "ewallet" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -937,16 +937,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih E-Wallet</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div className="grid grid-cols-3 gap-2.5">
                     {EWALLET_ITEMS.map((item) => (
                       <div
@@ -1027,7 +1027,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 7. FLOW: E-MONEY (EMoneyPage) */}
             {currentFlow === "emoney" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1037,16 +1037,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih E Money</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div className="grid grid-cols-2 gap-2.5">
                     {EMONEY_ITEMS.map((item) => (
                       <div
@@ -1130,7 +1130,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 8. FLOW: PDAM (PdamPage) */}
             {currentFlow === "pdam" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1140,16 +1140,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih Layanan PDAM</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div>
                     <label className="text-xs font-bold text-zinc-800">Wilayah / Kabupaten PDAM</label>
                     <select
@@ -1221,7 +1221,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 9. FLOW: TOP UP GAME (TopUpGamePage) */}
             {currentFlow === "topupgame" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1231,16 +1231,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih Game Favorit</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-4">
+                <div className="p-4 pt-5.5 space-y-4">
                   <div className="grid grid-cols-4 gap-2">
                     {GAME_ITEMS.map((item) => (
                       <div
@@ -1339,7 +1339,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 10. FLOW: E-VOUCHER (VoucherPage) */}
             {currentFlow === "evoucher" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1349,16 +1349,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Pilih E-Voucher</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-3">
+                <div className="p-4 pt-5.5 space-y-3">
                   {[
                     { title: "Google Play Rp 50.000", price: 50000, desc: "Voucher Game & Aplikasi" },
                     { title: "Spotify Premium 1 Bulan", price: 55000, desc: "Bebas Iklan & Download" },
@@ -1394,7 +1394,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 11. FLOW: LAINNYA (LainnyaPage) */}
             {currentFlow === "lainnya" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1404,16 +1404,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">Layanan Lainnya</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 grid grid-cols-4 gap-3 text-center">
+                <div className="p-4 pt-5.5 grid grid-cols-4 gap-3 text-center">
                   {[
                     { title: "Top Up Game", icon: "/assets/ppob/images/game.png", action: () => navigateTo("topupgame") },
                     { title: "E-Voucher", icon: "/assets/ppob/images/voucher.png", action: () => navigateTo("evoucher") },
@@ -1687,7 +1687,7 @@ export const PpobLiveSimulator: React.FC = () => {
             {/* 14. FLOW: by.U PROMO */}
             {currentFlow === "byu" && (
               <div className="min-h-full bg-white flex flex-col">
-                <div className="relative h-[135px] w-full">
+                <div className="relative h-[76px] w-full">
                   <Image
                     src="/assets/ppob/images/header.png"
                     alt="Header Background"
@@ -1697,16 +1697,16 @@ export const PpobLiveSimulator: React.FC = () => {
                   />
                   <button
                     onClick={handleBack}
-                    className="absolute top-4 left-3 p-2 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
+                    className="absolute top-2.5 left-2.5 p-1.5 text-white hover:bg-white/10 rounded-full cursor-pointer z-10"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
-                  <div className="absolute -bottom-1 left-5 right-5 bg-white py-2.5 px-4 rounded-lg border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.08)] text-center">
+                  <div className="absolute -bottom-2.5 left-5 right-5 bg-white py-1.5 px-4 rounded-xl border border-zinc-200 shadow-[0_4px_10px_rgba(0,0,0,0.06)] text-center">
                     <span className="text-xs font-bold text-[#ED1C24]">by.U Special Promo</span>
                   </div>
                 </div>
 
-                <div className="p-4 pt-6 space-y-3">
+                <div className="p-4 pt-5.5 space-y-3">
                   {[
                     { label: "Yang Bikin Kumat 10GB / 30 Hari", price: 35000, desc: "Kuota Utama 24 Jam Non-stop" },
                     { label: "Yang Bikin Nyaman 25GB / 30 Hari", price: 65000, desc: "Bonus Kuota Malam 10GB" },
@@ -1745,7 +1745,7 @@ export const PpobLiveSimulator: React.FC = () => {
                 {activeTab === 2 && (
                   <div className="space-y-3">
                     {/* Flutter AppHeader with backgroundtop.svg */}
-                    <div className="relative h-[135px] w-full overflow-hidden">
+                    <div className="relative h-[56px] w-full overflow-hidden">
                       <Image
                         src="/assets/ppob/icons/backgroundtop.svg"
                         alt="Curved App Header"
@@ -1753,32 +1753,38 @@ export const PpobLiveSimulator: React.FC = () => {
                         className="object-cover"
                         priority
                       />
-                      {/* Title: 'Merah Putih Pay' in bold white 19px */}
-                      <div className="absolute inset-0 pt-4 flex flex-col items-center justify-center">
-                        <span className="text-[19px] font-bold text-white tracking-wide">
+                      {/* Topbar Content: Centered Title + Right Action Buttons */}
+                      <div className="absolute inset-0 flex items-center justify-between px-4 pb-0.5 z-10">
+                        {/* Left balancing spacer */}
+                        <div className="w-12" />
+
+                        {/* Title: 'Merah Putih Pay' */}
+                        <span className="text-[15px] font-bold text-white tracking-wide">
                           Merah Putih Pay
                         </span>
-                      </div>
 
-                      {/* Notif & CS Icons in Top Right */}
-                      <div className="absolute top-3 right-2 flex items-center gap-1 z-10">
-                        <button
-                          onClick={() => alert("Notifikasi: Transaksi Anda berjalan lancar!")}
-                          className="p-1.5 rounded-full hover:bg-white/10 text-white cursor-pointer"
-                        >
-                          <Bell className="w-5 h-5 text-white" />
-                        </button>
-                        <button
-                          onClick={() => alert("Pusat Bantuan CS Merah Putih Pay siap 24/7!")}
-                          className="p-1.5 rounded-full hover:bg-white/10 text-white cursor-pointer -ml-1"
-                        >
-                          <Headset className="w-4 h-4 text-white" />
-                        </button>
+                        {/* Notif & CS Icons in Top Right */}
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => alert("Notifikasi: Transaksi Anda berjalan lancar!")}
+                            className="p-1 rounded-full hover:bg-white/10 text-white cursor-pointer"
+                            title="Notifikasi"
+                          >
+                            <Bell className="w-4 h-4 text-white" />
+                          </button>
+                          <button
+                            onClick={() => alert("Pusat Bantuan CS Merah Putih Pay siap 24/7!")}
+                            className="p-1 rounded-full hover:bg-white/10 text-white cursor-pointer"
+                            title="Pusat Bantuan"
+                          >
+                            <Headset className="w-4 h-4 text-white" />
+                          </button>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Card Saldo + Quick Menu (Overlapping Header by -mt-10) */}
-                    <div className="-mt-10 mx-4 bg-white rounded-2xl p-3 border-2 border-[#E2E0E7] shadow-[0_6px_16px_rgba(0,0,0,0.06)] relative z-20">
+                    {/* Card Saldo + Quick Menu (Overlapping Header by -mt-2.5) */}
+                    <div className="-mt-2.5 mx-4 bg-white rounded-2xl p-3 border-2 border-[#E2E0E7] shadow-[0_6px_16px_rgba(0,0,0,0.06)] relative z-20">
                       {/* BalanceCardBackground with background_saldo.svg */}
                       <div className="relative h-[75px] w-full rounded-xl overflow-hidden shadow-xs flex items-center px-3 text-white">
                         <Image
